@@ -1,0 +1,430 @@
+<!DOCTYPE HTML>
+<html>
+<link href='https://fonts.googleapis.com/css?family=Lexend' rel='stylesheet'>
+
+<body>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Whatever</title>
+  <canvas id='canvas' height='500' width='700'></canvas>
+  <p>Formula:
+
+    </div>
+  <div>
+    X:
+    <div>
+      &nbsp;
+      <input type="radio" id="rot" name="x" value="axis" checked />
+      <label>Axis</label>
+      <input type="radio" id="rot" name="x" value="spin" />
+      <label>Cosine</label>
+      <input type="radio" id="rot" name="x" value="swirl" />
+      <label>Swirl</label>
+      <input type="radio" id="rot" name="x" value="swirl2" />
+      <label>Swirl (frozen)</label>
+      <input type="radio" id="rot" name="x" value="reach" />
+      <label>Reach</label>
+      <input type="radio" id="rot" name="x" value="spinswirl" />
+      <label>Twist</label>
+      <input type="radio" id="rot" name="x" value="flipswirl" />
+      <label>Flip</label>
+      <input type="radio" id="rot" name="x" value="disperse" />
+      <label>Disperse</label>
+      <input type="radio" id="rot" name="x" value="wavy" />
+      <label>Whip</label>
+      <input type="radio" id="rot" name="x" value="bounce" />
+      <label>Bounce</label>
+      <input type="radio" id="rot" name="x" value="chaos" />
+      <label>Chaos</label>
+      <input type="radio" id="rot" name="x" value="test" />
+      <label>Test</label>
+    </div>
+    <div>
+      Y:
+      <div>
+        &nbsp;
+        <input type="radio" id="roty" name="y" value="axis" checked />
+        <label>Axis</label>
+        <input type="radio" id="roty" name="y" value="spin" />
+        <label>Sine</label>
+        <input type="radio" id="roty" name="y" value="swirl" />
+        <label>Swirl</label>
+        <input type="radio" id="roty" name="y" value="swirl2" />
+        <label>Swirl (frozen)</label>
+        <input type="radio" id="roty" name="y" value="reach" />
+        <label>Reach</label>
+        <input type="radio" id="roty" name="y" value="spinswirl" />
+        <label>Twist</label>
+        <input type="radio" id="roty" name="y" value="flipswirl" />
+        <label>Flip</label>
+        <input type="radio" id="roty" name="y" value="disperse" />
+        <label>Disperse</label>
+        <input type="radio" id="roty" name="y" value="wavy" />
+        <label>Whip</label>
+        <input type="radio" id="roty" name="y" value="bounce" />
+        <label>Bounce</label>
+        <input type="radio" id="roty" name="y" value="chaos" />
+        <label>Chaos</label>
+        <input type="radio" id="roty" name="y" value="test" />
+        <label>Test</label>
+      </div>
+    <div>
+      Rotation:
+      <div>
+        &nbsp;
+        <input type="checkbox" id="reversed"> Reverse
+        <input type="radio" id="spin" name="spin" value="none" checked />
+        <label>No Modifier</label>
+        <input type="radio" id="spin" name="spin" value="size" />
+        <label>Size Based</label>
+        <input type="radio" id="spin" name="spin" value="x" />
+        <label>Position Based</label>
+      </div>
+    </div>
+
+    </p>
+    <p>Animation:
+    <div>
+      <div class='container'>
+        <div>
+          <div>Style: <select id='animstyle' onfocusout='updateSettings()'>
+              <option value='loop'>Loop</option>
+              <option value='reverse'>Bounce</option>
+              <option value='inverse'>Inverse</option>
+            </select>
+          </div>
+          <input class='menu' type='number' id='zoom' value='1' placeholder='1' onfocusout='updateSettings()'> 🔎 Zoom
+          <div>
+            <input class='menu' type='number' id='animlength' value='24' placeholder='24' onfocusout='updateSettings()'>
+            🎞 Length <div>
+              <input class='menu' type='number' id='animspeed' value='0.3' placeholder='0.3'
+                onfocusout='updateSettings()'> ⏩ Animation Speed <div>
+                <input class='menu' type='number' id='spinSpeed' value='0.05' placeholder='0.05'
+                  onfocusout='updateSettings()'> 🌀 Rotation Speed <div>
+                  <p>💢 Intensity:
+                  <div>
+                    <input class='menu' type='number' id='intensityX' value='1' placeholder='1'
+                      onfocusout='updateSettings()'> ↔️X <div>
+                      <input class='menu' type='number' id='intensityY' value='1' placeholder='1'
+                        onfocusout='updateSettings()'> ↕️Y <style type='text/css'>
+                        canvas {
+                          width: 100%;
+                          height: 100%;
+                          margin: 0px;
+                          border: 0;
+                          overflow: hidden;
+                          /*  Disable scrollbars */
+                          display: block;
+                        }
+
+                        .container {
+                          display: inline-flex;
+                          border: 1px solid black;
+                        }
+
+                        html {
+                          font-family: 'Lexend';
+                        }
+                      </style>
+                      <script>
+                        'use strict';
+                        
+                        ((a) => {
+                          for (let o of Object.values(a)) {
+                            console.log(o)
+                            o['onclick'] = function () { updateSettings() }
+                          }
+                        })(document.querySelectorAll('input[type="radio"]'))
+                        document.querySelector('input[type="checkbox"]').onclick = function () { updateSettings() }
+                        Math.mult = (a, b) => a * b;
+                        Math.div = (a, b) => a / b;
+                        Math.add = (a, b) => a + b;
+                        const canvas = document.getElementById('canvas'),
+                          ctx = canvas.getContext('2d')
+                        let rot = 0
+                        const rgb = {
+                          r: 255,
+                          b: 0,
+                          g: 0,
+                        }
+                        let currentSize;
+                        canvas.width = 2000;
+                        canvas.height = 1200
+                        let z = document.getElementById('zoom'),
+                          zoom = z.value,
+                          a = document.getElementById('animlength'),
+                          animlength = +a.value,
+                          as = document.getElementById('animspeed'),
+                          animspeed = +as.value,
+                          nx = document.getElementById('intensityX'),
+                          ny = document.getElementById('intensityY'),
+                          intensityX = +nx.value,
+                          intensityY = +ny.value,
+                          animstyle = document.getElementById('animstyle').value,
+                          offset = {
+                            x: rot,
+                            y: rot
+                          },
+                          formula,
+                          check = false,
+                          reversed = false,
+                          spinstyle = null,
+                          spinSpeed = 0.05;
+
+                        function cycleColour() {
+                          if (rgb.r === 255 && rgb.g !== 255 && rgb.b === 0) {
+                            rgb.g += increase
+                          }
+                          if (rgb.r !== 0 && rgb.g === 255 && rgb.b === 0) {
+                            rgb.r -= increase
+                          }
+                          if (rgb.r === 0 && rgb.g === 255 & rgb.b !== 255) {
+                            rgb.b += increase
+                          }
+                          if (rgb.r === 0 && rgb.g !== 0 && rgb.b === 255) {
+                            rgb.g -= increase
+                          }
+                          if (rgb.r !== 255 && rgb.g === 0 && rgb.b === 255) {
+                            rgb.r += increase
+                          }
+                          if (rgb.r === 255 && rgb.g === 0 && rgb.b !== 0) {
+                            rgb.b -= increase
+                          }
+                          if (rgb.r > 255) {
+                            rgb.r = 255
+                          }
+                          if (rgb.r < 0) {
+                            rgb.r = 0
+                          }
+                          if (rgb.g > 255) {
+                            rgb.g = 255
+                          }
+                          if (rgb.g < 0) {
+                            rgb.g = 0
+                          }
+                          if (rgb.b > 255) {
+                            rgb.b = 255
+                          }
+                          if (rgb.b < 0) {
+                            rgb.b = 0
+                          }
+                        }
+                        const increase = 1;
+
+                        function Draw(x, y, size) {
+                          if (size <= 0.5) {
+                            return
+                          }
+                          let rotation, m = 1;
+
+
+                          rotation = rot
+
+                          switch (spinstyle) {
+                            case 'size':
+                              m = size;
+                              break;
+                              case 'x':
+                              m = Math.atan2(x,y);
+                              break;
+                          }
+                          switch (document.querySelector('input[name="y"]:checked').value) {
+                            case 'axis':
+                              offset.y = rot;
+                              break;
+                            case 'spin':
+                              offset.y = Math.sin(rot)
+                              break
+                            case 'swirl':
+                              offset.y = Math.sin(rot / size)
+                              break;
+                            case 'swirl2':
+                              offset.y = Math.sin(size)
+                              break;
+                            case 'spinswirl':
+                              offset.y = Math.sin(size + rot)
+                              break;
+                            case 'flipswirl':
+                              offset.y = Math.sin(size) * Math.cos(rot)
+                              break;
+                            case 'disperse':
+                              offset.y = Math.atan2(Math.cos(size), Math.sin(size)) * rot
+                              break;
+                            case 'wavy':
+                              offset.y = ((rot / size) * Math.sin(rot)) - Math.cos(rot)
+                              break;
+                            case 'bounce':
+                              offset.y = Math.abs(Math.sin(rot))
+                              break;
+                            case 'chaos':
+                              offset.y = Math.random()
+                              break;
+                            case 'test':
+                              offset.y = Math.random()
+                              break;
+                          }
+                          switch (document.querySelector('input[name="x"]:checked').value) {
+                            case 'axis':
+                              offset.x = rot;
+                              break;
+                            case 'spin':
+                              offset.x = Math.cos(rot)
+                              break
+                            case 'swirl':
+                              offset.x = Math.cos(rot / size)
+                              break;
+                            case 'swirl2':
+                              offset.x = Math.cos(size)
+                              break;
+                            case 'spinswirl':
+                              offset.x = Math.cos(size + rot)
+                              break;
+                            case 'flipswirl':
+                              offset.x = Math.cos(size) * Math.cos(rot)
+                              break;
+                            case 'disperse':
+                              offset.x = Math.atan2(Math.cos(size), Math.sin(size)) * rot
+                              break;
+                            case 'wavy':
+                              offset.x = ((rot / size) * Math.cos(rot)) - Math.sin(rot)
+                              break;
+                            case 'bounce':
+                              offset.x = Math.abs(Math.cos(rot))
+                              break;
+                            case 'chaos':
+                              offset.x = Math.random()
+                              break;
+                            case 'test':
+                              offset.x = Math.random()
+                              break;
+                          }
+
+                          currentSize = size
+                          ctx.save()
+                          ctx.translate(x * zoom, y * zoom)
+                          ctx.translate(zoom, zoom)
+                          ctx.beginPath()
+                          ctx.rotate(rotation * (m * spinSpeed))
+                          ctx.lineWidth = 2
+
+                          ctx.moveTo(size * zoom, size * zoom)
+                          ctx.lineTo(size * zoom, -size * zoom)
+                          ctx.lineTo(-size * zoom, -size * zoom)
+                          ctx.lineTo(-size * zoom, size * zoom)
+                          ctx.lineTo(size * zoom, size * zoom)
+                          ctx.strokeStyle = `rgb(${rgb.r},${rgb.g},${rgb.b})`
+                          ctx.stroke()
+                          ctx.restore()
+                          Draw(x - (offset.x * intensityX), y - (offset.y * intensityY), size * 0.95)
+                        }
+
+                        function updateSettings() {
+                          try {
+                            spinstyle = document.querySelector('input[name="spin"]:checked').value
+                            reversed = document.getElementById('reversed').checked
+                            rot = 0;
+                            spinSpeed = +document.getElementById('spinSpeed').value
+                            intensityY = +document.getElementById('intensityY').value
+                            intensityX = +document.getElementById('intensityX').value
+                            moving[4] = 0
+                            moving[5] = 0
+                            zoom = +document.getElementById('zoom').value
+                            animlength = +document.getElementById('animlength').value
+                            animspeed = +document.getElementById('animspeed').value
+                            if (animstyle = 'inverse') {
+                              animspeed = Math.abs(animspeed)
+                            }
+                            animstyle = document.getElementById('animstyle').value
+                            check = true
+                          } catch (e) {
+                            alert('Something went wrong when changing settings.')
+                            console.log(e)
+                          }
+                        }
+                        const moving = [false, false, false, false, 0, 0]
+
+                        function Update() {
+                          requestAnimationFrame(Update)
+                          cycleColour()
+                          if (reversed) {
+
+                            rot -= animspeed
+                          } else {
+
+                            rot += animspeed
+                          }
+                          if (Math.abs(rot) > Math.PI * animlength) {
+                            switch (animstyle) {
+                              case 'loop':
+                                rot = 0;
+                                break;
+                              case 'reverse':
+                                animspeed *= -1;
+                                break;
+                              case 'inverse':
+                                rot *= -1;
+                                break;
+                            }
+                          }
+                          ctx.clearRect(0, 0, canvas.width, canvas.height)
+                          ctx.fillStyle = '#000000'
+                          ctx.fillRect(0, 0, canvas.width, canvas.height)
+                          if (moving[0]) {
+                            moving[4] -= 3 / zoom
+                          }
+                          if (moving[1]) {
+                            moving[4] += 3 / zoom
+                          }
+                          if (moving[2]) {
+                            moving[5] -= 3 / zoom
+                          }
+                          if (moving[3]) {
+                            moving[5] += 3 / zoom
+                          }
+                          Draw((canvas.width / 2 / zoom) + moving[5], (canvas.height / 2 / zoom) + moving[4], 100)
+                          if (!check) {
+                            ctx.fillStyle = '#FFFFFF'
+                            ctx.font = "50px lexend";
+                            ctx.fillText("Scroll down for settings ↓", 50, 90);
+                          }
+                        }
+                        document.addEventListener('keydown', (e) => {
+                          if (e.key === 'ArrowUp') {
+                            moving[0] = true;
+                            moving[1] = false;
+                          }
+                          if (e.key === 'ArrowDown') {
+                            moving[1] = true;
+                            moving[0] = false;
+                          }
+                          if (e.key === 'ArrowLeft') {
+                            moving[2] = true;
+                            moving[3] = false;
+                          }
+                          if (e.key === 'ArrowRight') {
+                            moving[2] = false;
+                            moving[3] = true;
+                          }
+                        })
+                        window.addEventListener('keyup', (e) => {
+                          if (e.key === 'ArrowUp') {
+                            moving[0] = false;
+                          }
+                          if (e.key === 'ArrowDown') {
+                            moving[1] = false;
+                          }
+                          if (e.key === 'ArrowLeft') {
+                            moving[2] = false;
+                          }
+                          if (e.key === 'ArrowRight') {
+                            moving[3] = false;
+                          }
+                        })
+
+                        requestAnimationFrame(Update)
+
+
+                      </script>
+</body>
+
+</html>
