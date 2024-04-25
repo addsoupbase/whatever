@@ -9,12 +9,10 @@
   <canvas id='canvas' height='500' width='700'></canvas>
   <p>Formula:
 
-    </div>
-  <div>
-    X:
-    <div>
-      &nbsp;
-      <input type="radio" id="rot" name="x" value="axis" checked />
+  <div class="container2">
+    <div class="re">
+      <p></p>
+      &nbsp; X: <input type="radio" id="rot" name="x" value="axis" checked />
       <label>Axis</label>
       <input type="radio" id="rot" name="x" value="spin" />
       <label>Cosine</label>
@@ -36,13 +34,12 @@
       <label>Bounce</label>
       <input type="radio" id="rot" name="x" value="chaos" />
       <label>Chaos</label>
-    
+
     </div>
+    <p></p>
     <div>
-      Y:
-      <div>
-        &nbsp;
-        <input type="radio" id="roty" name="y" value="axis" checked />
+      <div class="re">
+        &nbsp; Y: <input type="radio" id="roty" name="y" value="axis" checked />
         <label>Axis</label>
         <input type="radio" id="roty" name="y" value="spin" />
         <label>Sine</label>
@@ -64,13 +61,10 @@
         <label>Bounce</label>
         <input type="radio" id="roty" name="y" value="chaos" />
         <label>Chaos</label>
-       
       </div>
-    <div>
-      Rotation:
-      <div>
-        &nbsp;
-        <input type="checkbox" id="reversed"> Reverse
+      <p></p>
+      <div class="re">
+        &nbsp; Rotation: <input type="checkbox" id="reversed"> Reverse
         <input type="radio" id="spin" name="spin" value="none" checked />
         <label>No Modifier</label>
         <input type="radio" id="spin" name="spin" value="size" />
@@ -79,350 +73,533 @@
         <label>Position Based</label>
       </div>
     </div>
-
-    </p>
-    <p>Animation:
-    <div>
-      <div class='container'>
+  </div>
+  </div>
+  </p>
+  <p>Animation:
+  <div>
+    <div class='container'>
+      <div>
         <div>
-          <div>Style: <select id='animstyle' onfocusout='updateSettings()'>
-              <option value='loop'>Loop</option>
-              <option value='reverse'>Bounce</option>
-              <option value='inverse'>Inverse</option>
-            </select>
-          </div>
-          <input class='menu' type='number' id='zoom' value='1' placeholder='1' onfocusout='updateSettings()'> 🔎 Zoom
+          <p></p>&nbsp;Behaviour: <select id='animstyle' onfocusout='updateSettings()'>
+            <option value='loop'>Loop</option>
+            <option value='reverse'>Bounce</option>
+            <option value='inverse'>Inverse</option>
+          </select>
+        </div>
+        <p></p>
+        &nbsp;Shape: <select id='shape' onfocusout='updateSettings()'>
+          &nbsp; <option value='square'>Square</option>
+          &nbsp; <option value='circle'>Circle</option>
+
+
+        </select>
+        <p></p>
+        <div>
+          <input class='inp' type='number' id='zoom' value='1' placeholder='1' onfocusout='updateSettings()'>
+          &nbsp; <button onclick="double('zoom')">×2</button> <button onclick="half('zoom')">÷2</button>🔎 Zoom
           <div>
-            <input class='menu' type='number' id='animlength' value='24' placeholder='24' onfocusout='updateSettings()'>
-            🎞 Length <div>
-              <input class='menu' type='number' id='animspeed' value='0.3' placeholder='0.3'
-                onfocusout='updateSettings()'> ⏩ Animation Speed <div>
-                <input class='menu' type='number' id='spinSpeed' value='0.05' placeholder='0.05'
-                  onfocusout='updateSettings()'> 🌀 Rotation Speed <div>
-                  <p>💢 Intensity:
-                  <div>
-                    <input class='menu' type='number' id='intensityX' value='1' placeholder='1'
-                      onfocusout='updateSettings()'> ↔️X <div>
-                      <input class='menu' type='number' id='intensityY' value='1' placeholder='1'
-                        onfocusout='updateSettings()'> ↕️Y <style type='text/css'>
-                        canvas {
-                          width: 100%;
-                          height: 100%;
-                          margin: 0px;
-                          border: 0;
-                          overflow: hidden;
-                          /*  Disable scrollbars */
-                          display: block;
-                        }
 
-                        .container {
-                          display: inline-flex;
-                          border: 1px solid black;
-                        }
+            <input class='inp' type='number' id='animlength' value='24' placeholder='24' onfocusout='updateSettings()'>
+            &nbsp; <button onclick="double('dur')">×2</button> <button onclick="half('dur')">÷2</button> 🎞 Duration
+            <div>
+              <input class='inp' type='number' id='animspeed' value='0.3' placeholder='0.3'
+                onfocusout='updateSettings()'> &nbsp; <button onclick="double('anim')">×2</button> <button
+                onclick="half('anim')">÷2</button> ⏩ Animation Speed<div>
+                <input class='inp' type='number' id='spinSpeed' value='0.05' placeholder='0.05'
+                  onfocusout='updateSettings()'> &nbsp; <button onclick="double('spin')">×2</button> <button
+                  onclick="half('spin')">÷2</button> 🌀 Rotation Speed <div>
+                  <input class='inp' type='number' id='sizeMultiplier' value='0.95' placeholder='0.95'
+                    onfocusout='updateSettings()'> &nbsp; <button onclick="double('size')">×2</button> <button
+                    onclick="half('size')">÷2</button> 🍄 Size Multiplier<div>
+                    <p>&nbsp;💢 Intensity:
+                    <div>
+                      <input class='inp' type='number' id='intensityX' value='1' placeholder='1'
+                        onfocusout='updateSettings()'> &nbsp; <button onclick="double('x')">×2</button> <button
+                        onclick="half('x')">÷2</button> ↔️ X Axis<div>
+                        <input class='inp' type='number' id='intensityY' value='1' placeholder='1'
+                          onfocusout='updateSettings()'> &nbsp;&nbsp;<button onclick="double('y')">×2</button>
+                        <button onclick="half('y')">÷2</button> ↕️Y Axis
+                        <p>&nbsp;🖍️ Drawing:
+                        <div>
+                          <input class='inp' type='color' id='color' value='#FFFFFF' placeholder='1'
+                            onfocusout='updateSettings()'>&nbsp;&nbsp;&nbsp;🎨 Shape Colour<div>
+                            <input class='inp' type='color' id='bgcolor' value='#000000' placeholder='1'
+                              onfocusout='updateSettings()'>&nbsp;&nbsp;&nbsp;🖼️ Background Colour<div>
+                              <p></p>
+                              &nbsp; <input type="checkbox" id="rainbow" checked> Rainbow
+                              &nbsp; <input type="checkbox" id="fill" onclick="updateSettings()"> Layered
 
-                        html {
-                          font-family: 'Lexend';
-                        }
-                      </style>
-                      <script>
-                        'use strict';
-                        
-                        ((a) => {
-                          for (let o of Object.values(a)) {
-                            console.log(o)
-                            o['onclick'] = function () { updateSettings() }
-                          }
-                        })(document.querySelectorAll('input[type="radio"]'))
-                        document.querySelector('input[type="checkbox"]').onclick = function () { updateSettings() }
-                        Math.mult = (a, b) => a * b;
-                        Math.div = (a, b) => a / b;
-                        Math.add = (a, b) => a + b;
-                        const canvas = document.getElementById('canvas'),
-                          ctx = canvas.getContext('2d')
-                        let rot = 0
-                        const rgb = {
-                          r: 255,
-                          b: 0,
-                          g: 0,
-                        }
-                        let currentSize;
-                        canvas.width = 2000;
-                        canvas.height = 1200
-                        let z = document.getElementById('zoom'),
-                          zoom = z.value,
-                          a = document.getElementById('animlength'),
-                          animlength = +a.value,
-                          as = document.getElementById('animspeed'),
-                          animspeed = +as.value,
-                          nx = document.getElementById('intensityX'),
-                          ny = document.getElementById('intensityY'),
-                          intensityX = +nx.value,
-                          intensityY = +ny.value,
-                          animstyle = document.getElementById('animstyle').value,
-                          offset = {
-                            x: rot,
-                            y: rot
-                          },
-                          formula,
-                          check = false,
-                          reversed = false,
-                          spinstyle = null,
-                          spinSpeed = 0.05;
+                              <div>
+                                <style type='text/css'>
+                                  canvas {
+                                    width: 100%;
+                                    height: 100%;
+                                    margin: 0px;
+                                    border: 0;
+                                    overflow: hidden;
+                                    /*  Disable scrollbars */
+                                    display: block;
+                                  }
 
-                        function cycleColour() {
-                          if (rgb.r === 255 && rgb.g !== 255 && rgb.b === 0) {
-                            rgb.g += increase
-                          }
-                          if (rgb.r !== 0 && rgb.g === 255 && rgb.b === 0) {
-                            rgb.r -= increase
-                          }
-                          if (rgb.r === 0 && rgb.g === 255 & rgb.b !== 255) {
-                            rgb.b += increase
-                          }
-                          if (rgb.r === 0 && rgb.g !== 0 && rgb.b === 255) {
-                            rgb.g -= increase
-                          }
-                          if (rgb.r !== 255 && rgb.g === 0 && rgb.b === 255) {
-                            rgb.r += increase
-                          }
-                          if (rgb.r === 255 && rgb.g === 0 && rgb.b !== 0) {
-                            rgb.b -= increase
-                          }
-                          if (rgb.r > 255) {
-                            rgb.r = 255
-                          }
-                          if (rgb.r < 0) {
-                            rgb.r = 0
-                          }
-                          if (rgb.g > 255) {
-                            rgb.g = 255
-                          }
-                          if (rgb.g < 0) {
-                            rgb.g = 0
-                          }
-                          if (rgb.b > 255) {
-                            rgb.b = 255
-                          }
-                          if (rgb.b < 0) {
-                            rgb.b = 0
-                          }
-                        }
-                        const increase = 1;
+                                  button {
+                                    background-color: #73ff00;
+                                    border-radius: 25px;
+                                    font-family: lexend;
+                                    border-color: #479905;
+                                  }
 
-                        function Draw(x, y, size) {
-                          if (size <= 0.5) {
-                            return
-                          }
-                          let rotation, m = 1;
+                                  .inp {
+                                    position: relative;
+                                    left: 10px;
+
+                                  }
+
+                                  .ch {
+                                    position: relative;
+                                    bottom: 10px;
+
+                                  }
+
+                                  button:hover {
+                                    background-color: #5bc704;
+                                  }
 
 
-                          rotation = rot
 
-                          switch (spinstyle) {
-                            case 'size':
-                              m = size;
-                              break;
-                              case 'x':
-                              m = Math.atan2(x,y);
-                              break;
-                          }
-                          switch (document.querySelector('input[name="y"]:checked').value) {
-                            case 'axis':
-                              offset.y = rot;
-                              break;
-                            case 'spin':
-                              offset.y = Math.sin(rot)
-                              break
-                            case 'swirl':
-                              offset.y = Math.sin(rot / size)
-                              break;
-                            case 'swirl2':
-                              offset.y = Math.sin(size)
-                              break;
-                            case 'spinswirl':
-                              offset.y = Math.sin(size + rot)
-                              break;
-                            case 'flipswirl':
-                              offset.y = Math.sin(size) * Math.cos(rot)
-                              break;
-                            case 'disperse':
-                              offset.y = Math.atan2(Math.cos(size), Math.sin(size)) * rot
-                              break;
-                            case 'wavy':
-                              offset.y = ((rot / size) * Math.sin(rot)) - Math.cos(rot)
-                              break;
-                            case 'bounce':
-                              offset.y = Math.abs(Math.sin(rot))
-                              break;
-                            case 'chaos':
-                              offset.y = Math.random()
-                              break;
-                            case 'test':
-                              offset.y = Math.random()
-                              break;
-                          }
-                          switch (document.querySelector('input[name="x"]:checked').value) {
-                            case 'axis':
-                              offset.x = rot;
-                              break;
-                            case 'spin':
-                              offset.x = Math.cos(rot)
-                              break
-                            case 'swirl':
-                              offset.x = Math.cos(rot / size)
-                              break;
-                            case 'swirl2':
-                              offset.x = Math.cos(size)
-                              break;
-                            case 'spinswirl':
-                              offset.x = Math.cos(size + rot)
-                              break;
-                            case 'flipswirl':
-                              offset.x = Math.cos(size) * Math.cos(rot)
-                              break;
-                            case 'disperse':
-                              offset.x = Math.atan2(Math.cos(size), Math.sin(size)) * rot
-                              break;
-                            case 'wavy':
-                              offset.x = ((rot / size) * Math.cos(rot)) - Math.sin(rot)
-                              break;
-                            case 'bounce':
-                              offset.x = Math.abs(Math.cos(rot))
-                              break;
-                            case 'chaos':
-                              offset.x = Math.random()
-                              break;
-                            case 'test':
-                              offset.x = Math.random()
-                              break;
-                          }
+                                  .container {
+                                    display: inline-flex;
+                                    border: 1px solid black;
+                                    width: 450px;
+                                    height: 470px;
+                                    background-color: rgba(20, 228, 13, 0.63);
+                                    border-radius: 10px
+                                  }
 
-                          currentSize = size
-                          ctx.save()
-                          ctx.translate(x * zoom, y * zoom)
-                          ctx.translate(zoom, zoom)
-                          ctx.beginPath()
-                          ctx.rotate(rotation * (m * spinSpeed))
-                          ctx.lineWidth = 2
+                                  .container2 {
+                                    display: flex;
+                                    flex-direction: column;
+                                    /* Change direction to vertical */
+                                    border: 1px solid black;
+                                    width: 950px;
+                                    /* Adjust the width to fit content */
+                                    height: 140px;
+                                    /* Adjust the width to fit content */
+                                    background-color: rgba(20, 228, 13, 0.63);
+                                    border-radius: 10px;
+                                  }
 
-                          ctx.moveTo(size * zoom, size * zoom)
-                          ctx.lineTo(size * zoom, -size * zoom)
-                          ctx.lineTo(-size * zoom, -size * zoom)
-                          ctx.lineTo(-size * zoom, size * zoom)
-                          ctx.lineTo(size * zoom, size * zoom)
-                          ctx.strokeStyle = `rgb(${rgb.r},${rgb.g},${rgb.b})`
-                          ctx.stroke()
-                          ctx.restore()
-                          Draw(x - (offset.x * intensityX), y - (offset.y * intensityY), size * 0.95)
-                        }
+                                  html {
+                                    font-family: 'Lexend';
+                                  }
+                                </style>
+                                <script>
+                                  'use strict';
+                                  function double(w) {
+                                    switch (w) {
+                                      case 'x':
+                                        document.getElementById('intensityX').value = `${+document.getElementById('intensityX').value * 2}`
+                                        break;
+                                      case 'y':
+                                        document.getElementById('intensityY').value = `${+document.getElementById('intensityY').value * 2}`
+                                        break;
+                                      case 'dur':
+                                        document.getElementById('animlength').value = `${+document.getElementById('animlength').value * 2}`
+                                        break;
+                                      case 'zoom':
+                                        document.getElementById('zoom').value = `${+document.getElementById('zoom').value * 2}`
+                                        break;
+                                      case 'anim':
+                                        document.getElementById('animspeed').value = `${+document.getElementById('animspeed').value * 2}`
+                                        break;
+                                      case 'spin':
+                                        document.getElementById('spinSpeed').value = `${+document.getElementById('spinSpeed').value * 2}`
+                                        break;
+                                      case 'size':
+                                        document.getElementById('sizeMultiplier').value = `${+document.getElementById('sizeMultiplier ').value * 2}`
+                                        break;
+                                    }
+                                    updateSettings()
+                                  }
+                                  function half(w) {
+                                    switch (w) {
+                                      case 'x':
+                                        document.getElementById('intensityX').value = `${+document.getElementById('intensityX').value / 2}`
+                                        break;
+                                      case 'y':
+                                        document.getElementById('intensityY').value = `${+document.getElementById('intensityY').value / 2}`
+                                        break;
+                                      case 'dur':
+                                        document.getElementById('animlength').value = `${+document.getElementById('animlength').value / 2}`
+                                        break;
+                                      case 'zoom':
+                                        document.getElementById('zoom').value = `${+document.getElementById('zoom').value / 2}`
+                                        break;
+                                      case 'anim':
+                                        document.getElementById('animspeed').value = `${+document.getElementById('animspeed').value / 2}`
+                                        break;
+                                      case 'spin':
+                                        document.getElementById('spinSpeed').value = `${+document.getElementById('spinSpeed').value / 2}`
+                                        break;
+                                      case 'size':
+                                        document.getElementById('sizeMultiplier').value = `${+document.getElementById('sizeMultiplier ').value / 2}`
+                                        break;
+                                    }
+                                    updateSettings()
+                                  }
+                                  ((a) => {
+                                    for (let o of Object.values(a)) {
+                                      console.log(o)
+                                      o['onclick'] = function () { updateSettings() }
+                                    }
+                                  })(document.querySelectorAll('input[type="radio"]'))
+                                  document.querySelector('input[type="checkbox"]').onclick = function () { updateSettings() }
 
-                        function updateSettings() {
-                          try {
-                            spinstyle = document.querySelector('input[name="spin"]:checked').value
-                            reversed = document.getElementById('reversed').checked
-                            rot = 0;
-                            spinSpeed = +document.getElementById('spinSpeed').value
-                            intensityY = +document.getElementById('intensityY').value
-                            intensityX = +document.getElementById('intensityX').value
-                            moving[4] = 0
-                            moving[5] = 0
-                            zoom = +document.getElementById('zoom').value
-                            animlength = +document.getElementById('animlength').value
-                            animspeed = +document.getElementById('animspeed').value
-                            if (animstyle = 'inverse') {
-                              animspeed = Math.abs(animspeed)
-                            }
-                            animstyle = document.getElementById('animstyle').value
-                            check = true
-                          } catch (e) {
-                            alert('Something went wrong when changing settings.')
-                            console.log(e)
-                          }
-                        }
-                        const moving = [false, false, false, false, 0, 0]
+                                  const canvas = document.getElementById('canvas'),
+                                    ctx = canvas.getContext('2d')
+                                  let rot = 0
+                                  const rgb = {
+                                    r: 255,
+                                    b: 0,
+                                    g: 0,
+                                  }
+                                  let currentSize;
+                                  canvas.width = 2000;
+                                  canvas.height = 1200
+                                  let zoom = +document.getElementById('zoom').value,
+                                    text = "Scroll down for settings ↓",
 
-                        function Update() {
-                          requestAnimationFrame(Update)
-                          cycleColour()
-                          if (reversed) {
+                                    animlength = +document.getElementById('animlength').value,
+                                    animspeed = +document.getElementById('animspeed').value,
+                                    intensityX = +document.getElementById('intensityX').value,
+                                    intensityY = +document.getElementById('intensityY').value,
+                                    animstyle = document.getElementById('animstyle').value,
+                                    offset = {
+                                      x: rot,
+                                      y: rot
+                                    },
+                                    fill = false,
+                                    shape = 'square',
+                                    reversed = false,
+                                    spinstyle = null,
+                                    color = '#FFFFFF',
+                                    bgcolor = '#000000',
+                                    sizeMultiplier = 0.95,
+                                    mousepos = {
+                                      x: 0,
+                                      y: 0
+                                    },
+                                    spinSpeed = 0.05;
 
-                            rot -= animspeed
-                          } else {
+                                  function cycleColour() {
+                                    if (rgb.r === 255 && rgb.g !== 255 && rgb.b === 0) {
+                                      rgb.g += increase
+                                    }
+                                    if (rgb.r !== 0 && rgb.g === 255 && rgb.b === 0) {
+                                      rgb.r -= increase
+                                    }
+                                    if (rgb.r === 0 && rgb.g === 255 & rgb.b !== 255) {
+                                      rgb.b += increase
+                                    }
+                                    if (rgb.r === 0 && rgb.g !== 0 && rgb.b === 255) {
+                                      rgb.g -= increase
+                                    }
+                                    if (rgb.r !== 255 && rgb.g === 0 && rgb.b === 255) {
+                                      rgb.r += increase
+                                    }
+                                    if (rgb.r === 255 && rgb.g === 0 && rgb.b !== 0) {
+                                      rgb.b -= increase
+                                    }
+                                    if (rgb.r > 255) {
+                                      rgb.r = 255
+                                    }
+                                    if (rgb.r < 0) {
+                                      rgb.r = 0
+                                    }
+                                    if (rgb.g > 255) {
+                                      rgb.g = 255
+                                    }
+                                    if (rgb.g < 0) {
+                                      rgb.g = 0
+                                    }
+                                    if (rgb.b > 255) {
+                                      rgb.b = 255
+                                    }
+                                    if (rgb.b < 0) {
+                                      rgb.b = 0
+                                    }
+                                  }
+                                  const increase = 1;
 
-                            rot += animspeed
-                          }
-                          if (Math.abs(rot) > Math.PI * animlength) {
-                            switch (animstyle) {
-                              case 'loop':
-                                rot = 0;
-                                break;
-                              case 'reverse':
-                                animspeed *= -1;
-                                break;
-                              case 'inverse':
-                                rot *= -1;
-                                break;
-                            }
-                          }
-                          ctx.clearRect(0, 0, canvas.width, canvas.height)
-                          ctx.fillStyle = '#000000'
-                          ctx.fillRect(0, 0, canvas.width, canvas.height)
-                          if (moving[0]) {
-                            moving[4] -= 3 / zoom
-                          }
-                          if (moving[1]) {
-                            moving[4] += 3 / zoom
-                          }
-                          if (moving[2]) {
-                            moving[5] -= 3 / zoom
-                          }
-                          if (moving[3]) {
-                            moving[5] += 3 / zoom
-                          }
-                          Draw((canvas.width / 2 / zoom) + moving[5], (canvas.height / 2 / zoom) + moving[4], 100)
-                          if (!check) {
-                            ctx.fillStyle = '#FFFFFF'
-                            ctx.font = "50px lexend";
-                            ctx.fillText("Scroll down for settings ↓", 50, 90);
-                          }
-                        }
-                        document.addEventListener('keydown', (e) => {
-                          if (e.key === 'ArrowUp') {
-                            moving[0] = true;
-                            moving[1] = false;
-                          }
-                          if (e.key === 'ArrowDown') {
-                            moving[1] = true;
-                            moving[0] = false;
-                          }
-                          if (e.key === 'ArrowLeft') {
-                            moving[2] = true;
-                            moving[3] = false;
-                          }
-                          if (e.key === 'ArrowRight') {
-                            moving[2] = false;
-                            moving[3] = true;
-                          }
-                        })
-                        window.addEventListener('keyup', (e) => {
-                          if (e.key === 'ArrowUp') {
-                            moving[0] = false;
-                          }
-                          if (e.key === 'ArrowDown') {
-                            moving[1] = false;
-                          }
-                          if (e.key === 'ArrowLeft') {
-                            moving[2] = false;
-                          }
-                          if (e.key === 'ArrowRight') {
-                            moving[3] = false;
-                          }
-                        })
-
-                        requestAnimationFrame(Update)
+                                  function Draw(x, y, size) {
+                                    if (size <= 0.5 || size >= 10000) {
+                                      return
+                                    }
+                                    let rotation, m = 1;
 
 
-                      </script>
+                                    rotation = rot
+
+                                    switch (spinstyle) {
+                                      case 'size':
+                                        m = size;
+                                        break;
+                                      case 'x':
+                                        m = Math.atan2(x, y) * 6;
+                                        break;
+                                      case 'cursor':
+                                        m = Math.atan2(offset.x, offset.y)
+                                        break;
+                                    }
+                                    switch (document.querySelector('input[name="y"]:checked').value) {
+                                      case 'axis':
+                                        offset.y = rot;
+                                        break;
+                                      case 'spin':
+                                        offset.y = Math.sin(rot)
+                                        break
+                                      case 'swirl':
+                                        offset.y = Math.sin(rot / size)
+                                        break;
+                                      case 'swirl2':
+                                        offset.y = Math.sin(size)
+                                        break;
+                                      case 'spinswirl':
+                                        offset.y = Math.sin(size + rot)
+                                        break;
+                                      case 'flipswirl':
+                                        offset.y = Math.sin(size) * Math.cos(rot)
+                                        break;
+                                      case 'disperse':
+                                        offset.y = Math.atan2(Math.cos(size), Math.sin(size)) * rot
+                                        break;
+                                      case 'wavy':
+                                        offset.y = ((rot / size) * Math.sin(rot)) - Math.cos(rot)
+                                        break;
+                                      case 'bounce':
+                                        offset.y = Math.abs(Math.sin(rot))
+                                        break;
+                                      case 'chaos':
+                                        offset.y = Math.random()
+                                        break;
+                                      case 'mouse':
+                                        offset.y = y
+                                        break;
+                                    }
+                                    switch (document.querySelector('input[name="x"]:checked').value) {
+                                      case 'axis':
+                                        offset.x = rot;
+                                        break;
+                                      case 'spin':
+                                        offset.x = Math.cos(rot)
+                                        break
+                                      case 'swirl':
+                                        offset.x = Math.cos(rot / size)
+                                        break;
+                                      case 'swirl2':
+                                        offset.x = Math.cos(size)
+                                        break;
+                                      case 'spinswirl':
+                                        offset.x = Math.cos(size + rot)
+                                        break;
+                                      case 'flipswirl':
+                                        offset.x = Math.cos(size) * Math.cos(rot)
+                                        break;
+                                      case 'disperse':
+                                        offset.x = Math.atan2(Math.cos(size), Math.sin(size)) * rot
+                                        break;
+                                      case 'wavy':
+                                        offset.x = ((rot / size) * Math.cos(rot)) - Math.sin(rot)
+                                        break;
+                                      case 'bounce':
+                                        offset.x = Math.abs(Math.cos(rot))
+                                        break;
+                                      case 'chaos':
+                                        offset.x = Math.random()
+                                        break;
+                                      case 'mouse':
+                                        offset.x = x
+                                        break;
+                                    }
+
+                                    currentSize = size
+
+                                    ctx.save()
+                                    ctx.translate(x * zoom, y * zoom)
+                                    ctx.translate(zoom, zoom)
+                                    ctx.beginPath()
+                                    ctx.rotate(rotation * (m * spinSpeed))
+                                    ctx.lineWidth = 2
+                                    if (document.getElementById('rainbow').checked) {
+                                      ctx.strokeStyle = `rgb(${rgb.r},${rgb.g},${rgb.b})`
+                                    }
+                                    else {
+                                      ctx.strokeStyle = color
+                                    }
+
+
+                                    switch (shape) {
+                                      case 'square': {
+
+                                        ctx.moveTo(size * zoom, size * zoom)
+                                        ctx.lineTo(size * zoom, -size * zoom)
+                                        ctx.lineTo(-size * zoom, -size * zoom)
+                                        ctx.lineTo(-size * zoom, size * zoom)
+                                        ctx.lineTo(size * zoom, size * zoom)
+                                      }
+                                        break;
+                                      case 'circle':
+                                        { ctx.arc(0, 0, size * zoom, 0, 2 * Math.PI) }
+                                        break;
+                                      case 'triangle':
+                                        const x1 = 0;
+                                        const y1 = (Math.sqrt(3) / 6) * size;
+                                        const x2 = -size / 2;
+                                        const y2 = -Math.sqrt(3) / 3 * size;
+                                        const x3 = size / 2;
+                                        const y3 = -Math.sqrt(3) / 3 * size;
+
+                                        // Draw triangle
+                                        ctx.beginPath();
+                                        ctx.moveTo((x1 * zoom) * 2, (y1 * zoom) * 2);
+                                        ctx.lineTo((x2 * zoom) * 2, (y2 * zoom) * 2);
+                                        ctx.lineTo((x3 * zoom) * 2, (y3 * zoom) * 2);
+                                        ctx.closePath();
+
+
+                                        break;
+                                    }
+
+                                    ctx.stroke()
+
+                                    ctx.restore()
+                                    if (fill) {
+                                      ctx.fill()
+                                    }
+                                    Draw(x - (offset.x * intensityX), y - (offset.y * intensityY), size * sizeMultiplier)
+                                  }
+
+                                  function updateSettings() {
+                                    try {
+                                      fill = document.getElementById('fill').checked
+                                      sizeMultiplier = +document.getElementById('sizeMultiplier').value
+                                      color = document.getElementById('color').value
+                                      bgcolor = document.getElementById('bgcolor').value
+
+                                      shape = document.getElementById('shape').value
+                                      spinstyle = document.querySelector('input[name="spin"]:checked').value
+                                      reversed = document.getElementById('reversed').checked
+                                      rot = 0;
+                                      spinSpeed = +document.getElementById('spinSpeed').value
+                                      intensityY = +document.getElementById('intensityY').value
+                                      intensityX = +document.getElementById('intensityX').value
+                                      moving[4] = 0
+                                      moving[5] = 0
+                                      zoom = +document.getElementById('zoom').value
+                                      animlength = +document.getElementById('animlength').value
+                                      animspeed = +document.getElementById('animspeed').value
+                                      if (animstyle = 'inverse') {
+                                        animspeed = Math.abs(animspeed)
+                                      }
+                                      animstyle = document.getElementById('animstyle').value
+                                      text = ''
+                                    } catch (e) {
+                                      alert('Something went wrong when changing settings.')
+                                      console.log(e)
+                                    }
+                                  }
+                                  const moving = [false, false, false, false, 0, 0]
+
+                                  function Update() {
+                                    requestAnimationFrame(Update)
+                                    cycleColour()
+                                    if (reversed) {
+
+                                      rot -= animspeed
+                                    } else {
+
+                                      rot += animspeed
+                                    }
+                                    if (Math.abs(rot) > Math.PI * animlength) {
+                                      switch (animstyle) {
+                                        case 'loop':
+                                          rot = 0;
+                                          break;
+                                        case 'reverse':
+                                          animspeed *= -1;
+                                          break;
+                                        case 'inverse':
+                                          rot *= -1;
+                                          break;
+                                      }
+                                    }
+                                    ctx.clearRect(0, 0, canvas.width, canvas.height)
+                                    ctx.fillStyle = bgcolor
+                                    ctx.fillRect(0, 0, canvas.width, canvas.height)
+                                    if (moving[0]) {
+                                      moving[4] -= 3 / zoom
+                                    }
+                                    if (moving[1]) {
+                                      moving[4] += 3 / zoom
+                                    }
+                                    if (moving[2]) {
+                                      moving[5] -= 3 / zoom
+                                    }
+                                    if (moving[3]) {
+                                      moving[5] += 3 / zoom
+                                    }
+                                    try {
+                                      Draw((canvas.width / 2 / zoom) + moving[5], (canvas.height / 2 / zoom) + moving[4], 100)
+                                    }
+                                    catch (e) {
+                                      text = 'Recursion error. Change size multiplier.'
+                                      document.getElementById('sizeMultiplier').value = '0.95'
+                                      sizeMultiplier = 0.95
+                                    }
+                                    ctx.fillStyle = '#FFFFFF'
+                                    ctx.font = "50px lexend";
+                                    ctx.fillText(text, 50, 90);
+                                  }
+                                  document.addEventListener('keydown', (e) => {
+                                    if (e.key === 'ArrowUp') {
+                                      moving[0] = true;
+                                      moving[1] = false;
+                                    }
+                                    if (e.key === 'ArrowDown') {
+                                      moving[1] = true;
+                                      moving[0] = false;
+                                    }
+                                    if (e.key === 'ArrowLeft') {
+                                      moving[2] = true;
+                                      moving[3] = false;
+                                    }
+                                    if (e.key === 'ArrowRight') {
+                                      moving[2] = false;
+                                      moving[3] = true;
+                                    }
+                                  })
+                                  window.addEventListener('keyup', (e) => {
+                                    if (e.key === 'ArrowUp') {
+                                      moving[0] = false;
+                                    }
+                                    if (e.key === 'ArrowDown') {
+                                      moving[1] = false;
+                                    }
+                                    if (e.key === 'ArrowLeft') {
+                                      moving[2] = false;
+                                    }
+                                    if (e.key === 'ArrowRight') {
+                                      moving[3] = false;
+                                    }
+                                  })
+
+                                  requestAnimationFrame(Update)
+
+                                  canvas.addEventListener('mousemove', (e) => {
+                                    mousepos.x = e.x
+                                    mousepos.y = e.y
+                                  })
+                                </script>
 </body>
 
 </html>
