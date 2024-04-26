@@ -104,9 +104,8 @@
         </div>
         <p></p>
         &nbsp;<span id="stype">Shape:</span> <select id='shape' onfocusout='updateSettings()'>
-          &nbsp; <option value='square'>Square</option>
           &nbsp; <option value='circle'>Circle</option>
-          &nbsp; <option value='quarter'>Quarter Circle</option>
+          &nbsp; <option value='quarter' selected>Quarter Circle</option>
           &nbsp; <option value='half'>Half Circle</option>
           &nbsp; <option value='ellipse'>Ellipse</option>
           &nbsp; <option value='donut'>Donut</option>
@@ -306,7 +305,7 @@
                                       y: rot
                                     },
                                     fill = false,
-                                    shape = 'square',
+                                    shape = 'quarter',
                                     reversed = false,
                                     spinstyle = null,
                                     color = '#FFFFFF',
@@ -369,7 +368,7 @@
 
                                     switch (spinstyle) {
                                       case 'size':
-                                        m = size;
+                                        m = size / 20;
                                         break;
                                       case 'x':
                                         m = Math.atan2(x, y) * 6;
