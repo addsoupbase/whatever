@@ -131,8 +131,8 @@
                   onfocusout='updateSettings()'> &nbsp; <button onclick="double('spin')">×2</button> <button
                   onclick="half('spin')">÷2</button> 🌀 Rotation Speed <div>
                   <input class='inp' type='number' id='sizeMultiplier' value='0.95' placeholder='0.95'
-                    onfocusout='updateSettings()'> &nbsp; <button onclick="double('size')">×2</button> <button
-                    onclick="half('size')">÷2</button> 🍄 Size Multiplier<div>
+                    onfocusout='updateSettings()'> &nbsp; <button onclick="double('size')">+.01</button> <button
+                    onclick="half('size')">-.01</button> 🍄 Size Multiplier<div>
                     <p>&nbsp;💢 Intensity:
                     <div>
                       <input class='inp' type='number' id='intensityX' value='1' placeholder='1'
@@ -242,7 +242,7 @@
                                         document.getElementById('spinSpeed').value = `${+document.getElementById('spinSpeed').value * 2}`
                                         break;
                                       case 'size':
-                                        document.getElementById('sizeMultiplier').value = `${+document.getElementById('sizeMultiplier').value * 2}`
+                                        document.getElementById('sizeMultiplier').value = `${+document.getElementById('sizeMultiplier').value + .01}`
                                         break;
                                     }
                                     updateSettings()
@@ -268,7 +268,7 @@
                                         document.getElementById('spinSpeed').value = `${+document.getElementById('spinSpeed').value / 2}`
                                         break;
                                       case 'size':
-                                        document.getElementById('sizeMultiplier').value = `${+document.getElementById('sizeMultiplier').value / 2}`
+                                        document.getElementById('sizeMultiplier').value = `${+document.getElementById('sizeMultiplier').value - .01}`
                                         break;
                                     }
                                     updateSettings()
