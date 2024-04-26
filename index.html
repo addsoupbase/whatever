@@ -1,10 +1,12 @@
 <!DOCTYPE HTML>
 <html>
 <link href='https://fonts.googleapis.com/css?family=Lexend' rel='stylesheet'>
+
 <head>
   <title>Whatever</title>
   <link rel="icon" type="image/x-icon" href="./favicon.ico">
 </head>
+
 <body>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
@@ -627,7 +629,7 @@
                                       Draw((canvas.width / 2 / zoom) + moving[5], (canvas.height / 2 / zoom) + moving[4], 100)
                                     }
                                     catch (e) {
-                                      text = 'An error has occured.'
+                                      text = 'Recursion error. Change size multiplier.'
                                       document.getElementById('sizeMultiplier').value = '0.95'
                                       sizeMultiplier = 0.95
                                     }
@@ -676,6 +678,12 @@
                                     mousepos.x = e.x
                                     mousepos.y = e.y
                                   })
+                                  window.addEventListener('keydown', (e) => {
+                                    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                                      e.preventDefault();
+                                    }
+                                  })
+
                                 </script>
 </body>
 
