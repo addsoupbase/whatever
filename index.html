@@ -294,7 +294,7 @@
                                   canvas.height = 1200
                                   let zoom = +document.getElementById('zoom').value,
                                     text = "Scroll down for settings ↓",
-
+                                    text2 = 'Tap screen to apply changes',
                                     animlength = +document.getElementById('animlength').value,
                                     animspeed = +document.getElementById('animspeed').value,
                                     intensityX = +document.getElementById('intensityX').value,
@@ -574,7 +574,7 @@
                                         animspeed = Math.abs(animspeed)
                                       }
                                       animstyle = document.getElementById('animstyle').value
-                                      text = ''
+                                      text = text2 = ''
                                     } catch (e) {
                                       alert('Something went wrong when changing settings.')
                                       console.log(e)
@@ -631,6 +631,8 @@
                                     ctx.fillStyle = '#FFFFFF'
                                     ctx.font = "50px lexend";
                                     ctx.fillText(text, 50, 90);
+                                    ctx.fillText(text2, 50, 170);
+
                                   }
                                   document.addEventListener('keydown', (e) => {
                                     if (e.key === 'ArrowUp') {
