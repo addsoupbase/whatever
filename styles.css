@@ -1,0 +1,104 @@
+.bigCanvas {
+    width: 100%;
+    margin: 0px;
+    border: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    /*  Disable scrollbars */
+    display: block;
+}
+
+input {
+    opacity: 1;
+
+    border-radius: 5px;
+    border-style: solid;
+    border-color: green;
+    background-color: #C8C5C5;
+    transition: background-color 0.1s;
+    transition: opacity 0.2s;
+
+}
+
+input:focus {
+    background-color: #E7E7E7;
+    transition: background-color 0.1s;
+}
+
+select:focus {
+    background-color: #E7E7E7;
+    transition: background-color 0.1s;
+}
+
+input:disabled {
+    opacity: 0.1;
+    transition: opacity 0.2s
+}
+
+select {
+    background-color: #C8C5C5
+}
+
+.smallCanvas {
+    position: 'fixed';
+    bottom: 0;
+    right: 0;
+    margin: 0px;
+    border: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    /*  Disable scrollbars */
+    display: block;
+}
+
+button {
+    background-color: #73ff00;
+    border-radius: 25px;
+    font-family: lexend;
+    border-color: #479905;
+}
+
+.inp {
+    position: relative;
+    left: 10px;
+}
+
+.ch {
+    position: relative;
+    bottom: 10px;
+}
+
+button:hover {
+    background-color: #5bc704;
+}
+
+.container {
+    display: inline-flex;
+    border: 2px solid darkgreen;
+    width: 460px;
+    height: 470px;
+    background-color: rgba(20, 228, 13, 0.63);
+    border-radius: 10px
+}
+
+span {
+    position: relative;
+    margin-right: 5px;
+}
+
+.container2 {
+    flex-direction: row;
+    /* Change direction to vertical */
+    border: 1px solid black;
+    width: 830px;
+    /* Adjust the width to fit content */
+    height: 180px;
+    /* Adjust the width to fit content */
+    background-color: rgba(20, 228, 13, 0.63);
+    border-radius: 10px;
+}
+
+html {
+    font-family: 'Lexend';
+    background-color: grey;
+}
