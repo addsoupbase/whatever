@@ -90,7 +90,8 @@ span {
     flex-direction: row;
     /* Change direction to vertical */
     border: 1px solid black;
-    width: 830px;
+    max-width: 800px;
+    align-items: center;
     /* Adjust the width to fit content */
     height: 180px;
     /* Adjust the width to fit content */
