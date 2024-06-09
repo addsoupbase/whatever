@@ -75,8 +75,8 @@ button:hover {
 .container {
     display: inline-flex;
     border: 2px solid darkgreen;
-    width: 460px;
-    height: 470px;
+    width: 550px;
+    height: 500px;
     background-color: rgba(20, 228, 13, 0.63);
     border-radius: 10px
 }
