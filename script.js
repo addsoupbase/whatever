@@ -1,79 +1,184 @@
 'use strict';
-let slot = document.getElementById('slot')
+let  indicators = ['Axis', 'Cosine', 'Swirl', 'Static', 'Reach', 'Twist', 'Flip', 'Disperse', 'Whip', 'Bounce', 'Chaos', 'Vacuum', 'Magnet', 'Unwind', 'Orbit', 'Wiggle', 'Swing','Zigzag','Flicker']
+for (let i = 0; i < indicators.length; i++) {
+    $('#modif').append(`<button name='x'class='tile${i ? ' deselected' : ' selected'}'>${indicators[i]}</button>`)
 
-function DISABLE() {
-    col.disabled = !col.disabled
-    console.log(col.disabled)
 }
-let mirrorstyle = 'none'
-function double(w) {
-    switch (w) {
-        case 'x':
-            document.getElementById('intensityX').value = `${+document.getElementById('intensityX').value * 2}`
-            break;
-        case 'y':
-            document.getElementById('intensityY').value = `${+document.getElementById('intensityY').value * 2}`
-            break;
-        case 'dur':
-            document.getElementById('animlength').value = `${+document.getElementById('animlength').value * 2}`
-            break;
-        case 'zoom':
-            document.getElementById('zoom').value = `${+document.getElementById('zoom').value * 2}`
-            return zoom = +document.getElementById('zoom').value
-            break;
-        case 'anim':
-            document.getElementById('animspeed').value = `${+document.getElementById('animspeed').value * 2}`
-            break;
-        case 'spin':
-            document.getElementById('spinSpeed').value = `${+document.getElementById('spinSpeed').value * 2}`
-            break;
-        case 'size':
-            document.getElementById('sizeMultiplier').value = `${+document.getElementById('sizeMultiplier').value + .01}`
-            break;
-    }
-    updateSettings()
-}
+for (let i = 0; i < indicators.length; i++) {
+    $('#modif2').append(`<button name='y'class='tile${i ? ' deselected' : ' selected'}'>${indicators[i] === 'Cosine' ? 'Sine' : indicators[i]}</button>`)
 
-function half(w) {
-    switch (w) {
-        case 'x':
-            document.getElementById('intensityX').value = `${+document.getElementById('intensityX').value / 2}`
-            break;
-        case 'y':
-            document.getElementById('intensityY').value = `${+document.getElementById('intensityY').value / 2}`
-            break;
-        case 'dur':
-            document.getElementById('animlength').value = `${+document.getElementById('animlength').value / 2}`
-            break;
-        case 'zoom':
-            document.getElementById('zoom').value = `${+document.getElementById('zoom').value / 2}`
-            return zoom = +document.getElementById('zoom').value
-            break;
-        case 'anim':
-            document.getElementById('animspeed').value = `${+document.getElementById('animspeed').value / 2}`
-            break;
-        case 'spin':
-            document.getElementById('spinSpeed').value = `${+document.getElementById('spinSpeed').value / 2}`
-            break;
-        case 'size':
-            document.getElementById('sizeMultiplier').value = `${+document.getElementById('sizeMultiplier').value - .01}`
-            break;
-    }
-    updateSettings()
 }
-((a) => {
-    for (let o of Object.values(a)) {
-        o['onclick'] = function () {
-            updateSettings()
+$('.container2').append(`<div class='grid2'>
+<div class='grid2'><span>X Intensity</span><input id='intensitX' type='text' value='1' class='grid2'><button>×2</button><button>÷2</button><br>
+ <span>Y Intensity</span><input type='text' id='intensitY' value='1'class='grid2'><button>×2</button><button>÷2</button>
+ <span>Spin Speed</span><input type='text' id='spin' value='0.05'  class='grid2'><button>×2</button><button>÷2</button>
+ <span>Anim Dura.</span><input type='text' placeholder='Blank = Infinity' id='dura' value='24' class='grid2'><button>×2</button><button>÷2</button>
+ <span>Size Mult.</span><input type='text' id='size' value='0.95' class='grid2 f'><button>+.01</button><button>-.01</button>
+ <span>Layered </span><input class='check' id='layer' type='checkbox'><br>
+ <br>
+ <span>Loop</span><input type='checkbox' id='loop' class='check'><br><br>
+ <span>Shape <select id='sel'>  
+ 
+ <option value='quarter'>Quarter Circle</option>
+ <option value='circle'>Circle</option>
+
+ <option value='half'>Half Circle</option>           
+ <option value='ellipse'>Ellipse</option>           
+ <option value='2'>2</option>           
+ <option value='3'>3</option>           
+ <option value='4'>4</option>           
+ <option value='5'>5</option>           
+ <option value='6'>6</option>           
+ <option value='7'>7</option>           
+ <option value='8'>8</option>           
+ <option value='9'>9</option>           
+ <option value='10'>10</option>           
+
+ </select></span><br><br>
+ <span>Mirror <select id='mirror'>  
+ <option value='none'>None</option>
+ <option value='top'>Vertical</option>           
+ <option value='left'>Horizontal</option>           
+ <option value='both'>Both</option>           
+           
+ </select></span>
+ <br>
+ <br>
+ <span>Rainbow Style
+ <br><input type='radio' value='Cycle' name='color1' checked><label for='color1'>Cycle</label>
+ <br><input type='radio' value='Gradual' name='color1'><label>Gradual</label></span>
+ 
+ </div>
+</div>`)
+$('.container2').children().each(function () {
+    let me = $(this)[0]
+    if (me.className !== 'bottom' && me.className !== 'bottomDiv' && me.className !== 'scroll' && me.className !== 'grid2') {
+        $(this).hide()
+    }
+})
+$('.grid2').children().children().each(function () {
+    if (this.innerHTML === '×2') {
+        $(this).on({
+            click: function () {
+                $(this).prev()[0].value *= 2
+                updateSettings()
+            }
+        })
+    }
+    else if (this.innerHTML === '÷2') {
+        $(this).on({
+            click: function () { $(this).prev().prev()[0].value
+                $(this).prev().prev()[0].value /= 2
+                updateSettings()
+            }
+        })
+    }
+    else if (this.innerHTML === '+.01') {
+        $(this).on({
+            click: function () {
+                $(this).prev()[0].value = +$(this).prev()[0].value +  .01
+                updateSettings()
+            }
+        })
+    }
+    else if (this.innerHTML === '-.01') {
+        $(this).on({
+            click: function () {
+                $(this).prev().prev()[0].value -= .01
+                updateSettings()
+            }
+        })
+    }
+    else {
+        $(this).on({
+            click: function () {
+                updateSettings()
+            }
+        })
+    }
+})
+function Show(w) {
+    $('.container2').children().each(function () {
+        let me = $(this)[0]
+        if (me.className !== 'bottom' && me.className !== 'bottomDiv' && me.className !== 'scroll') {
+            $(this).hide()
+        }
+    })
+    let temp = {
+        menu1: function () {
+            $('.container2').children().each(function () {
+                let me = $(this)[0]
+                if (me.className === 'grid') {
+                    $(this).show()
+                }
+            })
+        },
+        menu2: function () {
+            $('.container2').children().each(function () {
+                let me = $(this)[0]
+                if (me.className === 'grid2') {
+                    $(this).show()
+                }
+            })
         }
     }
-})(document.querySelectorAll('input[type="radio"]'))
-document.querySelector('input[type="checkbox"]').onclick = function () {
-    updateSettings()
+    temp[w]()
+
+
 }
-const body = document.getElementById('body')
-let canvas = document.getElementById('canvas'),
-    col = document.getElementById('color'),
+Show('menu1')
+let hidden = false
+let selectedX = 'Axis',
+    selectedY = 'Axis'
+$('#modif').children().each(function () {
+    $(this).on({
+        click: function () {
+            $('[name=x]').each(function () {
+                this.className = 'tile deselected'
+            })
+            selectedX = this.innerHTML
+            this.className = 'tile selected'
+            updateSettings()
+        }
+    })
+})
+$('#modif2').children().each(function () {
+    $(this).on({
+        click: function () {
+            $('[name=y]').each(function () {
+                this.className = 'tile deselected'
+            })
+            selectedY = this.innerHTML
+            this.className = 'tile selected'
+            updateSettings()
+        }
+    })
+})
+function hideSettings() {
+    if (!hidden) {
+        $('.container2').animate({ left: -350 })
+        $('.scroll').html('Show')
+        console.log(1)
+        hidden = true
+    }
+    else {
+        $('.container2').animate({ left: 20 })
+        $('.scroll').html('Hide')
+        hidden = false
+    }
+}
+
+
+
+
+let mirrorstyle = 'none'
+const choose = (...a) => a[Math.floor(Math.random() * a.length)]
+
+
+
+const body = $('body')[0]
+let canvas = $('canvas')[0],
+    col = 'red',
     ctx = canvas.getContext('2d')
 let rot = 0
 const rgb = {
@@ -84,15 +189,14 @@ const rgb = {
 let currentSize;
 canvas.width = 2000;
 canvas.height = 1200
-let miniplayer = document.getElementById('miniplayer')
-let zoom = +document.getElementById('zoom').value,
-    text = "Scroll down for settings ↓",
-    text2 = 'Click/Tap for hints & to apply changes',
-    animlength = +document.getElementById('animlength').value,
-    animspeed = +document.getElementById('animspeed').value,
-    intensityX = +document.getElementById('intensityX').value,
-    intensityY = +document.getElementById('intensityY').value,
-    animstyle = document.getElementById('animstyle').value,
+let zoom = 0.5,
+    text = "",
+    text2 = '',
+    animlength = 24,
+    animspeed = 0.3,
+    intensityX = 1,
+    intensityY = 1,
+    animstyle = false,
     mini = false,
     offset = {
         x: rot,
@@ -101,7 +205,7 @@ let zoom = +document.getElementById('zoom').value,
     fill = false,
     shape = 'quarter',
     reversed = false,
-    spinstyle = null,
+    spinstyle = 'size',
     color = '#FFFFFF',
     bgcolor = '#000000',
     sizeMultiplier = 0.95,
@@ -153,11 +257,8 @@ let scroll = 0;
 const increase = 1;
 let sizemult = 1
 
-function detectScroll() {
-    scroll = document.documentElement.scrollTop
-}
 const main = document.getElementById('canvas')
-
+let rainbowType = 'Cycle'
 function Draw(x, y, size, inverse) {
     if (size <= 2 || size >= 10000) {
         return
@@ -175,118 +276,53 @@ function Draw(x, y, size, inverse) {
             m = Math.atan2(offset.x, offset.y)
             break;
     }
-    switch (document.querySelector('input[name="y"]:checked').value) {
-        case 'axis':
-            offset.y = rot;
-            break;
-        case 'spin':
-            offset.y = Math.sin(rot)
-            break
-        case 'swirl':
-            offset.y = Math.sin(rot / size) * 5
-            break;
-        case 'wiggle':
-            offset.y = (Math.sin(rot * (rot / size)) + rot / size) * 5
-            break;
-        case 'pulse':
-            offset.y = Math.sin(size / (rot + 0.0001)) * 4
-            break;
-        case 'swirl2':
-            offset.y = Math.sin(size)
-            break;
-        case 'spinswirl':
-            offset.y = Math.sin(size + rot)
-            break;
-        case 'flipswirl':
-            offset.y = Math.sin(size) * Math.cos(rot)
-            break;
-        case 'disperse':
-            offset.y = Math.atan2(Math.cos(size), Math.sin(size)) * rot
-            break;
-        case 'wavy':
-            offset.y = ((rot / size) * Math.sin(rot)) - Math.cos(rot)
-            break;
-        case 'bounce':
-            offset.y = Math.abs(Math.sin(rot))
-            break;
-        case 'chaos':
-            offset.y = Math.random()
-            break;
-        case 'vacuum':
-            offset.y = Math.sinh(rot / size)
-            break;
-        case 'magnet':
-            offset.y = size / rot
-            break;
-        case 'orbit':
-            offset.y = ((Math.cos(rot / size) * rot) / (size * 10)) * 50
-            break;
-        case 'reach':
-            offset.y = size
-            break;
-        case 'swing':
-            offset.y = Math.sin(rot / size) * Math.cos(rot / size) * rot
-            break;
-        case 'test':
-            offset.y = Math.cos(rot / size) * Math.cos(rot / size)
-            break;
-    }
-    switch (document.querySelector('input[name="x"]:checked').value) {
-        case 'axis':
-            offset.x = rot;
-            break;
-        case 'spin':
-            offset.x = Math.cos(rot)
-            break
-        case 'swirl':
-            offset.x = Math.cos(rot / size) * 5
-            break;
-        case 'wiggle':
-            offset.x = (Math.cos(rot * (rot / size)) + rot / size) * 5
-            break;
-        case 'pulse':
-            offset.x = Math.sin(size / (rot + 0.0001)) * 4
-            break;
-        case 'swirl2':
-            offset.x = Math.cos(size)
-            break;
-        case 'spinswirl':
-            offset.x = Math.cos(size + rot)
-            break;
-        case 'flipswirl':
-            offset.x = Math.cos(size) * Math.cos(rot)
-            break;
-        case 'disperse':
-            offset.x = Math.atan2(Math.cos(size), Math.sin(size)) * rot
-            break;
-        case 'wavy':
-            offset.x = ((rot / size) * Math.cos(rot)) - Math.sin(rot)
-            break;
-        case 'bounce':
-            offset.x = Math.abs(Math.cos(rot))
-            break;
-        case 'chaos':
-            offset.x = Math.random()
-            break;
-        case 'vacuum':
-            offset.x = Math.cosh(rot / size)
-            break;
-        case 'magnet':
-            offset.x = size / rot
-            break;
-        case 'reach':
-            offset.x = size
-            break;
-        case 'orbit':
-            offset.x = ((Math.sin(rot / size) * rot) / (size * 10)) * 50
-            break;
-        case 'swing':
-            offset.x = Math.sin(rot / size) * Math.cos(rot / size) * rot
-            break;
-        case 'test':
-            offset.x = Math.abs((Math.cos(rot / size)/size)) * (Math.sin(rot / size)*Math.cos(rot/size))
-            break;
-    }
+    const formulasx = {
+        axis: rot,
+        cosine: Math.cos(rot),
+        swirl: Math.sin(rot / size) * 5,
+        wiggle: (Math.sin(rot * (rot / size)) + rot / size) * 5,
+        unwind: Math.sin(size / (rot + 0.0001)) * 4,
+        static: Math.sin(size),
+        flip: Math.sin(size + rot),
+        twist: Math.sin(size) * Math.cos(rot) * 50,
+        disperse: Math.atan2(Math.cos(size), Math.sin(size)) * rot,
+        whip: ((rot / size) * Math.sin(rot)) - Math.cos(rot),
+        bounce: Math.abs(Math.sin(rot)),
+        chaos: Math.random(),
+        vacuum: Math.sinh(rot / size),
+        magnet: size / rot,
+        orbit: ((Math.cos(rot / size) * rot) / (size * 10)) * 50,
+        reach: size,
+        swing: Math.sin(rot / size) * Math.cos(rot / size) * rot,
+        zigzag: Math.cos(rot/size) * Math.sin(rot/size) * Math.cos(rot/size) * Math.tan(rot/size),    },
+        formulasy = {
+            test:rot,
+            axis: rot,
+            sine: Math.sin(rot),
+            zigzag: Math.sin(rot/size) * Math.cos(rot/size) * Math.sin(rot/size) * Math.tan(rot/size),
+            swirl: Math.cos(rot / size) * 5,
+            wiggle: (Math.cos(rot * (rot / size)) + rot / size) * 5,
+            unwind: Math.cos(size / (rot + 0.0001)) * 4,
+            static: Math.cos(size),
+            flip: Math.cos(size + rot),
+          //  twist: Math.cos(size) * Math.sin(rot) * 50,
+            disperse: Math.atan2(Math.sin(size), Math.cos(size)) * rot,
+            whip: ((rot / size) * Math.cos(rot)) - Math.sin(rot),
+            bounce: Math.abs(Math.cos(rot)),
+            chaos: Math.random(),
+            vacuum: Math.cosh(rot / size),
+            magnet: size / rot,
+            orbit: ((Math.sin(rot / size) * rot) / (size * 10)) * 50,
+            reach: size,
+            swing: Math.cos(rot / size) * Math.sin(rot / size) * rot,
+            twist: Math.sin(rot / size) * Math.sin(rot / size),
+        }
+    formulasy.flicker = frame % 2 ? formulasy.swirl : formulasy.orbit
+    formulasx.flicker = frame % 2 ? formulasy.swirl : formulasy.orbit
+
+    console.log(rotation)
+    offset.x = formulasx[selectedX.toLowerCase()];
+    offset.y = formulasy[selectedY.toLowerCase()];
     currentSize = size
     ctx.save()
     ctx.translate(x * zoom, y * zoom)
@@ -295,11 +331,11 @@ function Draw(x, y, size, inverse) {
     ctx.rotate(rotation * (m * spinSpeed))
 
     ctx.lineWidth = 2.5 * sizemult
-    if (document.getElementById('rainbow').checked) {
-        ctx.strokeStyle = `rgb(${rgb.r},${rgb.g},${rgb.b})`
-    } else {
-        ctx.strokeStyle = col.value
-    }
+        if (rainbowType === 'Cycle') {
+            ctx.strokeStyle = `rgb(${rgb.r},${rgb.g},${rgb.b})`
+        }
+       else { ctx.strokeStyle = `hsl(${100-size*2},100%,50%)`}
+
     switch (shape) {
         case 'square': {
             ctx.moveTo(size * zoom, size * zoom)
@@ -349,7 +385,7 @@ function Draw(x, y, size, inverse) {
         ctx.fill()
     }
     try {
-        if (inverse === 0) {      Draw(x - (offset.x * distortion.x * intensityX), y - (offset.y * distortion.y * intensityY), size * sizeMultiplier, 0) }
+        if (inverse === 0) { Draw(x - (offset.x * distortion.x * intensityX), y - (offset.y * distortion.y * intensityY), size * sizeMultiplier, 0) }
         else if (inverse === 1) { Draw(x + (offset.x * distortion.x * intensityX), y + (offset.y * distortion.y * intensityY), size * sizeMultiplier, 1) }
         else if (inverse === 2) { Draw(x - (offset.x * distortion.x * intensityX), y + (offset.y * distortion.y * intensityY), size * sizeMultiplier, 2) }
         else if (inverse === 3) { Draw(x + (offset.x * distortion.x * intensityX), y - (offset.y * distortion.y * intensityY), size * sizeMultiplier, 3) }
@@ -375,33 +411,45 @@ function rgbToHex(r, g, b) {
     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
 let distortion = {
-    x:1,
-    y:1
+    x: 1,
+    y: 1
 }
 function updateSettings() {
     try {
 
-        fill = document.getElementById('fill').checked
-        sizeMultiplier = +document.getElementById('sizeMultiplier').value
-        color = col.value
-        bgcolor = document.getElementById('bgcolor').value
-        shape = Math.trunc(+document.getElementById('sides').value) || document.getElementById('shape').value
-        spinstyle = document.querySelector('input[name="spin"]:checked').value
-        mirrorstyle = document.getElementById('mirror').value
-        //  reversed = document.getElementById('reversed').checked
-        rot = 0;
-        spinSpeed = +document.getElementById('spinSpeed').value
-        intensityY = +document.getElementById('intensityY').value
-        intensityX = +document.getElementById('intensityX').value
-        moving[4] = 0
-        moving[5] = 0
-        zoom = +document.getElementById('zoom').value
-        animlength = +document.getElementById('animlength').value
+        /*  fill = document.getElementById('fill').checked
+          sizeMultiplier = +document.getElementById('sizeMultiplier').value
+          color = col.value
+          bgcolor = document.getElementById('bgcolor').value
+          shape = Math.trunc(+document.getElementById('sides').value) || document.getElementById('shape').value
+          spinstyle = document.querySelector('input[name="spin"]:checked').value
+          mirrorstyle = document.getElementById('mirror').value
+          //  reversed = document.getElementById('reversed').checked
+          rot = 0;
+          spinSpeed = +document.getElementById('spinSpeed').value
+          intensityY = +document.getElementById('intensityY').value
+          intensityX = +document.getElementById('intensityX').value
+          moving[4] = 0
+          moving[5] = 0
+          zoom = +document.getElementById('zoom').value
+          animlength = +document.getElementById('animlength').value*/
+          spinSpeed = $('#spin')[0].value
+          shape = $('#sel')[0].value
+          fill = $('#layer')[0].checked
+          mirrorstyle = $('#mirror')[0].value
+          sizeMultiplier = $('#size')[0].value
+          animlength = $('#dura')[0].value
+          rainbowType = $('input:radio:checked')[0].value
+          intensityY = $('#intensitY')[0].value
+          intensityX = $('#intensitX')[0].value
+          animstyle = $('#loop')[0].checked
+
+        rot = 0
         if (animlength <= 0) {
             animlength = Infinity
         }
-        animspeed = +document.getElementById('animspeed').value
-        animstyle = document.getElementById('animstyle').value
+        //  animspeed = +document.getElementById('animspeed').value
+        //animstyle = document.getElementById('animstyle').value
 
         if (animstyle = 'inverse') {
             animspeed = Math.abs(animspeed)
@@ -414,42 +462,23 @@ function updateSettings() {
     }
 }
 const moving = [false, false, false, false, 0, 0]
-
+let frame = 0
 function Update() {
-    requestAnimationFrame(Update)
-
+   frame= requestAnimationFrame(Update)
     cycleColour()
+
+    canvas.height = window.innerHeight
+    canvas.width = window.innerWidth
     if (reversed) {
         rot -= animspeed
     } else {
         rot += animspeed
     }
-    if (scroll > +window.innerHeight / 2 && miniplayer.checked) {
-        canvas.className = 'smallCanvas'
-        slot.className = 'bigCanvas';
-        canvas.style.position = 'fixed'
-        slot.width = canvas.width
-        slot.height = canvas.height
-        canvas.style.width = `${400 * 1.5}px`
-        canvas.style.height = `${225 * 1.5}px`
-        sizemult = 3
-    }
-    if (scroll < +window.innerHeight / 2 || !miniplayer.checked) {
-        slot.className = ''
-        canvas.className = 'bigCanvas'
-        canvas.style.position = ''
-        canvas.style.width = `100%`
-        canvas.style.height = slot.style.height
-        slot.height = '0';
-        slot.width = '0'
-        sizemult = 3
-    }
-    if (mini) {
-        canvas.style.width = `${window.innerWidth / 4}px`
-    }
+
+
     if (Math.abs(rot) > Math.PI * animlength) {
-        switch (animstyle) {
-            case 'loop':
+        /*switch (animstyle) {
+            default:
                 rot = 0;
                 break;
             case 'reverse':
@@ -458,7 +487,8 @@ function Update() {
             case 'inverse':
                 rot *= -1;
                 break;
-        }
+        }*/
+        animstyle ? rot = 0 : animspeed *= -1   
     }
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.fillStyle = bgcolor
@@ -502,21 +532,15 @@ function Update() {
     ctx.fillStyle = '#FFFFFF'
     ctx.textAlign = 'left'
     ctx.font = "50px lexend";
-    if (slot.className !== 'bigCanvas') {
-        ctx.fillText(text, 50, 90);
-        if (text2.includes('[error]')) {
-            ctx.fillStyle = '#FF3333'
-        }
-        ctx.fillText(text2.replace('[error]', ''), 50, 170);
-    } else {
-        ctx.textAlign = 'center'
-        ctx.font = "100px lexend";
-        ctx.fillText(text, canvas.width / 2, canvas.height / 2);
-        if (text2.includes('[error]')) {
-            ctx.fillStyle = '#FF3333'
-        }
-        ctx.fillText(text2.replace('[error]', ''), canvas.width / 2, (canvas.height / 2) + 100);
+
+    ctx.textAlign = 'center'
+    ctx.font = "60px lexend";
+    ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+    if (text2.includes('[error]')) {
+        ctx.fillStyle = '#FF3333'
     }
+    ctx.fillText(text2.replace('[error]', ''), canvas.width / 2, (canvas.height / 2) + 100);
+
 
 }
 document.addEventListener('keydown', (e) => {
@@ -535,6 +559,9 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight') {
         moving[2] = false;
         moving[3] = true;
+    }
+    if (e.key.toLowerCase() === 'r') {
+        random()
     }
 })
 window.addEventListener('keyup', (e) => {
@@ -556,8 +583,12 @@ canvas.addEventListener('mousemove', (e) => {
     mousepos.x = e.x
     mousepos.y = e.y
 })
-window.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-        e.preventDefault();
+$('canvas').on({
+    mousedown: updateSettings
+})
+$(document).on({
+    wheel: function (event) {
+        zoom += Math.sign(event.originalEvent.wheelDeltaY) * 0.01
+        zoom = Math.max(0.004, zoom)
     }
 })

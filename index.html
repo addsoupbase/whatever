@@ -6,186 +6,33 @@
   <title>Whatever</title>
   <link rel="icon" type="image/x-icon" href="./favicon.ico">
   <link rel="stylesheet" type="text/css" href="./styles.css">
+  <meta name="viewport" content="width=device-width" charset="utf-8">
 
 </head>
 
-<body id='body' onscroll="detectScroll()">
-  <meta charset="utf-8">
-  <canvas id='canvas' class='bigCanvas' height='500' width='700'></canvas>
-  <canvas id='slot' className='bleh' width='0' height="0"></canvas>
-  <p>
-    <span style="cursor: pointer;" onclick='text="The way the shape moves"'>Formula:</span>
+<body id='body'>
   <div class="container2">
-    <div class="re">
-      <p></p> &nbsp; X: <input type="radio" id="rot" name="x" value="axis" checked />
-      <span>Axis</span>
-      <input type="radio" id="rot" name="x" value="spin" />
-      <span>Cosine</span>
-      <input type="radio" id="rot" name="x" value="swirl" />
-      <span>Swirl</span>
-      <input type="radio" id="rot" name="x" value="swirl2" />
-      <span>Swirl (frozen)</span>
-      <input type="radio" id="rot" name="x" value="reach" />
-      <span>Reach</span>
-      <input type="radio" id="rot" name="x" value="spinswirl" />
-      <span>Twist</span>
-      <input type="radio" id="rot" name="x" value="flipswirl" />
-      <span>Flip</span>
-      <input type="radio" id="rot" name="x" value="disperse" />
-      <span>Disperse</span>
-      <input type="radio" id="rot" name="x" value="wavy" />
-      <span>Whip</span>
-      <input type="radio" id="rot" name="x" value="bounce" />
-      <span>Bounce</span>
-      <input type="radio" id="rot" name="x" value="chaos" />
-      <span>Chaos</span>
-      <input type="radio" id="rot" name="x" value="vacuum" />
-      <span>Vacuum</span>
-      <input type="radio" id="roty" name="x" value="magnet" />
-      <span>Magnet</span>
-      <input type="radio" id="roty" name="x" value="pulse" />
-      <span>Unwind</span>
-      <input type="radio" id="roty" name="x" value="orbit" />
-      <span>Orbit</span>
-
-      <input type="radio" id="rot" name="x" value="wiggle" />
-      <span>Wiggle</span>
-      <input type="radio" id="rot" name="x" value="swing" />
-      <span>Swing</span>
-      
+    <div class="bottomDiv">
+      <button class="bottom" onclick="Show('menu2')">Tweak</button>
+      <button class="bottom" onclick="Show('menu1')">Formula</button>
     </div>
-    <p></p>
-    <div>
-      <div class="re"> &nbsp; Y: <input type="radio" id="roty" name="y" value="axis" checked />
-        <span>Axis</span>
-        <input type="radio" id="roty" name="y" value="spin" />
-        <span>Sine</span>
-        <input type="radio" id="roty" name="y" value="swirl" />
-        <span>Swirl</span>
-        <input type="radio" id="roty" name="y" value="swirl2" />
-        <span>Swirl (frozen)</span>
-        <input type="radio" id="roty" name="y" value="reach" />
-        <span>Reach</span>
-        <input type="radio" id="roty" name="y" value="spinswirl" />
-        <span>Twist</span>
-        <input type="radio" id="roty" name="y" value="flipswirl" />
-        <span>Flip</span>
-        <input type="radio" id="roty" name="y" value="disperse" />
-        <span>Disperse</span>
-        <input type="radio" id="roty" name="y" value="wavy" />
-        <span>Whip</span>
-        <input type="radio" id="roty" name="y" value="bounce" />
-        <span>Bounce</span>
-        <input type="radio" id="roty" name="y" value="chaos" />
-        <span>Chaos</span>
-        <input type="radio" id="roty" name="y" value="vacuum" />
-        <span>Vacuum</span>
-        <input type="radio" id="roty" name="y" value="magnet" />
-        <span>Magnet</span>
-        <input type="radio" id="roty" name="y" value="pulse" />
-        <span>Unwind</span>
-        <input type="radio" id="roty" name="y" value="orbit" />
-        <span>Orbit</span>
-        <input type="radio" id="rot" name="y" value="wiggle" />
-        <span>Wiggle</span>
-        <input type="radio" id="rot" name="y" value="swing" />
-        <span>Swing</span>
-       
-      </div>
-      <p></p>
-      <div class="re"> &nbsp; Rotation: <input type="radio" id="spin" name="spin" value="none" checked />
-        <span>No Modifier</span>
-        <input type="radio" id="spin" name="spin" value="size" />
-        <span>Size Based</span>
-        <input type="radio" id="spin" name="spin" value="x" />
-        <span>Position Based</span>
-      </div>
+
+    <div class="grid" id="modif">
     </div>
+    <div class="grid" id="modif2">
+    </div>
+    <button class="scroll" onclick="hideSettings()">Hide</button>
+   
   </div>
-  </div>
-  </p>
-  <p>Animation:
-  <div>
-    <div class='container'>
-      <div>
-        <div>
-          <p></p>
-          <span style="cursor: pointer;" onclick='text="What happens after the animation ends"'>&nbsp; Behaviour:</span>
-          <select id='animstyle' onfocusout='updateSettings()'>
-            <option value='loop'>Loop</option>
-            <option value='reverse'>Bounce</option>
-            <option value='inverse'>Inverse</option>
-          </select>
-          <span style="cursor: pointer;" onclick='text="Will cause lag"'>&nbsp; Mirror:</span>
-          <select id='mirror' onfocusout='updateSettings()'>
-            <option value='none'>None</option>
-            <option value='top'>Vertical</option>
-            <option value='left'>Horizontal</option>
-            <option value='both'>Both</option>
+  <canvas id='canvas' class='bigCanvas' height='500' width='700'>
+  
+  </canvas>
+  
 
-          </select>
-        </div>
-        <p></p> &nbsp; <span id="stype">Shape:</span>
-        <select id='shape' onfocusout='updateSettings()'> &nbsp; <option value='circle'>Circle</option> &nbsp; <option
-            value='quarter' selected>Quarter Circle</option> &nbsp; <option value='half'>Half Circle</option> &nbsp;
-          <option value='ellipse'>Ellipse</option> &nbsp; <option value='donut'>Donut</option>
-        </select> OR <span> Sides:</span>
-        <input type="number" id="sides" onfocusout="updateSettings()" placeholder="(enter for custom shape)">
-        <p></p>
-        <div>
-          <input class='inp' type='number' id='zoom' value='1' placeholder='1' onfocusout='updateSettings()'> &nbsp;
-          <button onclick="double('zoom')">×2</button>
-          <button onclick="half('zoom')">÷2</button>
-          <span>🔎 Zoom</span>
-          <div>
-            <input class='inp' type='number' id='animlength' value='24' placeholder='24' onfocusout='updateSettings()'>
-            &nbsp; <button onclick="double('dur')">×2</button>
-            <button onclick="half('dur')">÷2</button>
-            <span style="cursor: pointer;" onclick='text="How long the animation is.";text2="0 ≥ is Infinite"'> 🎞
-              Duration</span>
-            <div>
-              <input class='inp' type='number' id='animspeed' value='0.3' placeholder='0.3'
-                onfocusout='updateSettings()'> &nbsp; <button onclick="double('anim')">×2</button>
-              <button onclick="half('anim')">÷2</button>
-              <span style="cursor: pointer;" onclick="text='How fast the animation play\s'"> ⏩ Animation Speed</span>
-              <div>
-                <input class='inp' type='number' id='spinSpeed' value='0.05' placeholder='0.05'
-                  onfocusout='updateSettings()'> &nbsp; <button onclick="double('spin')">×2</button>
-                <button onclick="half('spin')">÷2</button>
-                <span style="cursor: pointer;" onclick='text="How fast the shape spins"'> 🌀 Rotation Speed</span>
-                <div>
-                  <input class='inp' type='number' id='sizeMultiplier' value='0.95' placeholder='0.95'
-                    onfocusout='updateSettings()'> &nbsp; <button onclick="double('size')">+.01</button>
-                  <button onclick="half('size')">-.01</button>
-                  <span style="cursor: pointer;" onclick='text="Per shape drawn"'> 🍄 Size Multiplier</span>
-                  <div>
-                    <p>&nbsp; <span style="cursor: pointer;" onclick='text="The force of the applied formula"'>💢
-                        Intensity:</span>
-                    <div>
-                      <input class='inp' type='number' id='intensityX' value='1' placeholder='1'
-                        onfocusout='updateSettings()'>&nbsp; &nbsp;<button onclick="double('x')">×2</button>
-                      <button onclick="half('x')">÷2</button>
-                      <span>↔️ X Axis</span>
-                      <div>
-                        <input class='inp' type='number' id='intensityY' value='1' placeholder='1'
-                          onfocusout='updateSettings()'>&nbsp;&nbsp; <button onclick="double('y')">×2</button>
-                        <button onclick="half('y')">÷2</button> &nbsp;<span> ↕️&nbsp;Y Axis </span>
-                        <p>
-                          <span style="cursor: pointer;" onclick='text="How the shape is displayed"'>&nbsp;🖍️
-                            Drawing:</span>
-                        <div>
-                          <input class='inp' type='color' id='color' value='#FFFFFF' placeholder='1'
-                            onfocusout='updateSettings()'>&nbsp;&nbsp;&nbsp;🎨 Shape Colour <div>
-                            <input class='inp' type='color' id='bgcolor' value='#000000' placeholder='1'
-                              onfocusout='updateSettings()'>&nbsp;&nbsp;&nbsp;🖼️ Background Colour <div>
-                              <p></p> &nbsp; <input type="checkbox" id="rainbow" onclick="DISABLE()" checked> Rainbow
-                              &nbsp; <input type="checkbox" id="fill" onclick="updateSettings()"> Layered &nbsp; <input
-                                type="checkbox" id="miniplayer"> Miniplayer <div>
-                                <div id='minicontainer'></div>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="script.js">
 
-                                <script src="script.js">
-
-                                </script>
+  </script>
 </body>
 
 </html>
