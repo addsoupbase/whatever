@@ -158,7 +158,6 @@ function hideSettings() {
     if (!hidden) {
         $('.container2').animate({ left: -350 })
         $('.scroll').html('Show')
-        console.log(1)
         hidden = true
     }
     else {
@@ -320,7 +319,6 @@ function Draw(x, y, size, inverse) {
     formulasy.flicker = frame % 2 ? formulasy.swirl : formulasy.orbit
     formulasx.flicker = frame % 2 ? formulasy.swirl : formulasy.orbit
 
-    console.log(rotation)
     offset.x = formulasx[selectedX.toLowerCase()];
     offset.y = formulasy[selectedY.toLowerCase()];
     currentSize = size
