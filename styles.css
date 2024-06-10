@@ -40,6 +40,8 @@ input {
     transition: background-color 0.1s;
     transition: opacity 0.2s;
     margin: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 input:focus {
@@ -106,6 +108,7 @@ button:hover {
 
 span {
     margin: 3px;
+    
 }
 
 p {
