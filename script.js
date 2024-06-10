@@ -63,7 +63,12 @@ $('.container2').append(`<div class='grid2'>
 </div>`)
 $('.container2').children().each(function () {
     let me = $(this)[0]
-    if (me.className !== 'bottom' && me.className !== 'bottomDiv' && me.className !== 'scroll' && me.className !== 'grid2') {
+    if (me.className !== 'bottom' &&
+     me.className !== 'bottomDiv' &&
+      me.className !== 'scroll' && 
+      me.className !== 'grid2' && 
+      me.className !== 'zoomIn' &&
+       me.className !== 'zoomOut') {
         $(this).hide()
     }
 })
@@ -112,7 +117,11 @@ $('.grid2').children().children().each(function () {
 function Show(w) {
     $('.container2').children().each(function () {
         let me = $(this)[0]
-        if (me.className !== 'bottom' && me.className !== 'bottomDiv' && me.className !== 'scroll') {
+        if (me.className !== 'bottom' && me.className !== 'bottomDiv' && me.className !== 'scroll'
+        && 
+        me.className !== 'zoomIn' &&
+         me.className !== 'zoomOut'
+        ) {
             $(this).hide()
         }
     })

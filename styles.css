@@ -135,9 +135,27 @@ p {
 
 .scroll {
     position: absolute;
-    left: 100%;
+    left: 101%;
     height: 50px;
     border-radius: 0;
+}
+.zoomIn {
+    position: absolute;
+    left: 101%;
+    height: 30px;
+    width: 30px;
+    top: 60px;
+    border-radius: 100%;
+
+}
+.zoomOut {
+    position: absolute;
+    left: 101%;
+    height: 30px;
+    width: 30px;
+    bottom: 60px;
+    border-radius: 100%;
+
 }
 
 html {
