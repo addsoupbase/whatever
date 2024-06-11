@@ -1,5 +1,5 @@
 'use strict';
-let indicators = ['Axis', 'Cosine', 'Swirl', 'Static', 'Reach', 'Twist', 'Flip', 'Disperse', 'Whip', 'Bounce', 'Chaos', 'Vacuum', 'Magnet', 'Unwind', 'Orbit', 'Wiggle', 'Swing', 'Zigzag', 'Flicker', 'Wave', 'Cubic', 'Stretch', 'Glitch']
+let indicators = ['Axis', 'Cosine', 'Swirl', 'Static', 'Reach', 'Twist', 'Flip', 'Disperse', 'Whip', 'Bounce', 'Chaos', 'Vacuum', 'Magnet', 'Unwind', 'Orbit', 'Wiggle', 'Swing', 'Zigzag', 'Flicker', 'Wave', 'Cubic', 'Stretch', 'Glitch', 'Clover']
 for (let i = 0; i < indicators.length; i++) {
     $('#modif').append(`<button name='x'class='tile${i ? ' deselected' : ' selected'}'>${indicators[i]}</button>`)
 
@@ -12,10 +12,10 @@ for (let i = 0; i < indicators.length; i++) {
 
 $('.container2').append(`<div class='grid2'>
 <div class='grid2'><span>X Intensity</span><input id='intensitX' type='text' value='1' class='grid2'><button>×2</button><button>÷2</button><br>
- <span>Y Intensity</span><input type='text' id='intensitY' value='1'class='grid2'><button>×2</button><button>÷2</button>
- <span>Spin Speed</span><input type='text' id='spin' value='0.05'  class='grid2'><button>×2</button><button>÷2</button>
- <span>Anim Dura.</span><input type='text' placeholder='Blank = Infinity' id='dura' value='100' class='grid2'><button>×2</button><button>÷2</button>
- <span>Size  ⚠️&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><input type='text' id='size' value='0.95' class='grid2 f'><button>+.01</button><button>-.01</button>
+ <span>Y Intensity</span><input type='text' id='intensitY' value='1'class='grid2'><button>×2</button><button>÷2</button><br>
+ <span>Spin Speed</span><input type='text' id='spin' value='0.05'  class='grid2'><button>×2</button><button>÷2</button><br>
+ <span>Anim Dura.</span><input type='text' placeholder='Blank = Infinity' id='dura' value='100' class='grid2'><button>×2</button><button>÷2</button><br>
+ <span>Size  ⚠️&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><input type='text' id='size' value='0.95' class='grid2 f'><button>+.01</button><button>-.01</button><br>
  <span>Layered ⚠️</span><input class='check' id='layer' type='checkbox'><br>
  <span>Glow ⚠️</span><input class='check' id='glow' type='checkbox'><br>
 
@@ -23,7 +23,7 @@ $('.container2').append(`<div class='grid2'>
  <span>Shape <select id='sel'>  
  
  <option value='quarter'>Quarter Circle</option>
- <option value='circle'>Circle</option>
+ <option value='circle'>Circle ⚠️</option>
 
  <option value='half'>Half Circle</option>           
  <option value='ellipse'>Ellipse</option>           
@@ -48,15 +48,15 @@ $('.container2').append(`<div class='grid2'>
  </span><br>
  <span>Filter <select id='filter'>  
  <option value='source-over'>Default</option>
- <option value='destination-over'>Facing Viewer</option>           
- <option value='lighter'>Lighter</option>           
- <option value='xor'>Glass</option>           
+ <option value='destination-over'>Overlap ⚠️</option>           
+ <option value='lighter'>Lighter ⚠️</option>           
+ <option value='xor'>Glass ⚠️</option>           
  <option value='luminosity'>Luminosity</option>           
 
  </select></span>
  <br>
  <span>Rainbow Style
- <br><input type='radio' value='Cycle' name='color1' checked><label for='color1'>Cycle</label>
+ <br><input type='radio' value='Cycle' name='color1' checked><label>Cycle</label>
  <br><input type='radio' value='Gradual' name='color1'><label>Gradual</label></span>
  
  </div>
@@ -64,11 +64,11 @@ $('.container2').append(`<div class='grid2'>
 $('.container2').children().each(function () {
     let me = $(this)[0]
     if (me.className !== 'bottom' &&
-     me.className !== 'bottomDiv' &&
-      me.className !== 'scroll' && 
-      me.className !== 'grid2' && 
-      me.className !== 'zoomIn' &&
-       me.className !== 'zoomOut') {
+        me.className !== 'bottomDiv' &&
+        me.className !== 'scroll' &&
+        me.className !== 'grid2' &&
+        me.className !== 'zoomIn' &&
+        me.className !== 'zoomOut') {
         $(this).hide()
     }
 })
@@ -118,9 +118,9 @@ function Show(w) {
     $('.container2').children().each(function () {
         let me = $(this)[0]
         if (me.className !== 'bottom' && me.className !== 'bottomDiv' && me.className !== 'scroll'
-        && 
-        me.className !== 'zoomIn' &&
-         me.className !== 'zoomOut'
+            &&
+            me.className !== 'zoomIn' &&
+            me.className !== 'zoomOut'
         ) {
             $(this).hide()
         }
@@ -218,7 +218,7 @@ const rgb = {
 let currentSize;
 canvas.width = 2000;
 canvas.height = 1200
-
+//Defs
 let zoom = 0.5,
     text = "⚠️ = may cause lag",
     text2 = '',
@@ -235,17 +235,56 @@ let zoom = 0.5,
     },
     fill = false,
     shape = 'quarter',
-    reversed = false,
     spinstyle = 'size',
     filter = 'source-over',
-    color = '#FFFFFF',
-    bgcolor = '#000000',
     sizeMultiplier = 0.95,
-    mousepos = {
-        x: 0,
-        y: 0
-    },
-    spinSpeed = 0.05;
+    spinSpeed = 0.05,
+    formula = (key, axis, size, rot) => {
+        let sin = Math.sin,
+            cos = Math.cos,
+            k = key;
+        if (key == null) {
+            throw Error('Key is broken.')
+        }
+        if (axis === 'y') {
+            sin = Math.cos
+            cos = Math.sin
+        }
+        if (k === 'Sine') {
+            k = 'Cosine'
+        }
+
+        const container = {
+            axis: rot,
+            cosine: cos(rot)*3,
+            swirl: sin(rot / size) * 5,
+            wiggle: (sin(rot * (rot / size)) + rot / size) * 5,
+            unwind: sin(size / (rot + 0.0001)) * 4,
+            static: sin(size),
+            flip: sin(size + rot),
+            twist: sin(size) * cos(rot) * 50,
+            disperse: Math.atan2(cos(size), sin(size)) * rot,
+            whip: ((rot / size) * sin(rot)) - cos(rot),
+            bounce: Math.abs(sin(rot)),
+            chaos: Math.random() * 10,
+            vacuum: Math.sinh(rot / size),
+            magnet: (size / rot),
+            orbit: ((cos(rot / size) * rot) / (size * 10)) * 50,
+            reach: size/4,
+            swing: sin(rot / size) * cos(rot / size) * rot,
+            zigzag: cos(rot / size) * sin(rot / size) * cos(rot / size) * Math.tan(rot / size),
+            flicker: frame % 2 ? sin(rot / size) * 5 : ((cos(rot / size) * rot) / (size * 10)) * 50,
+            wave: cos(frame / size / rot) * (rot),
+            cubic: cos(frame / size / rot) * (rot) * sin(rot / size) * sin(rot / size),
+            stretch: cos(frame / size / rot) * (rot) * sin(rot / size) * sin(rot / size) * cos(rot / size),
+            glitch: (cos(frame / size) * cos(size) * sin(rot / size) * size) ** Math.floor(Math.cos(rot)) * rot,
+            clover: sin(rot / size * (cos(rot / size))) * (rot / size)*10
+
+        }
+
+        return container[k.toLowerCase()]
+    };
+
 
 function cycleColour() {
     if (rgb.r === 255 && rgb.g !== 255 && rgb.b === 0) {
@@ -285,76 +324,31 @@ function cycleColour() {
         rgb.b = 0
     }
 }
-let scroll = 0;
 const increase = 1;
-let sizemult = 1
-
-const main = document.getElementById('canvas')
 let rainbowType = 'Cycle'
 function Draw(x, y, size, inverse) {
     if (size <= 2 || size >= 10000) {
         return
     }
 
-    let rotation, m = 1;
+    let rotation, drawRotStyle = 1;
     rotation = rot
     let SPIN = new Map(
         [['size', size / 20], ['x', Math.atan2(x, y) * 6], ['cursor', Math.atan2(offset.x, offset.y)]]
     )
-    m = SPIN.get(spinstyle)
-    let form = (key, axis) => {
-        let sin = Math.sin,
-            cos = Math.cos,
-            k = key;
-        if (axis === 'y') {
-            sin = Math.cos
-            cos = Math.sin
-        }
-        if (k === 'Sine') {
-            k = 'Cosine'
-        }
-        return {
-            axis: rot,
-            cosine: cos(rot),
-            swirl: sin(rot / size) * 5,
-            wiggle: (sin(rot * (rot / size)) + rot / size) * 5,
-            unwind: sin(size / (rot + 0.0001)) * 4,
-            static: sin(size),
-            flip: sin(size + rot),
-            twist: sin(size) * cos(rot) * 50,
-            disperse: Math.atan2(cos(size), sin(size)) * rot,
-            whip: ((rot / size) * sin(rot)) - cos(rot),
-            bounce: Math.abs(sin(rot)),
-            chaos: Math.random(),
-            vacuum: Math.sinh(rot / size),
-            magnet: (size / rot),
-            orbit: ((cos(rot / size) * rot) / (size * 10)) * 50,
-            reach: size,
-            swing: sin(rot / size) * cos(rot / size) * rot,
-            zigzag: cos(rot / size) * sin(rot / size) * cos(rot / size) * Math.tan(rot / size),
-            flicker: frame % 2 ? sin(rot / size) * 5 : ((cos(rot / size) * rot) / (size * 10)) * 50,
-            wave: cos(frame / size / rot) * (rot),
-            cubic: cos(frame / size / rot) * (rot) * sin(rot / size) * sin(rot / size),
-            stretch: cos(frame / size / rot) * (rot) * sin(rot / size) * sin(rot / size) * cos(rot / size),
-            glitch: (cos(frame / size) * cos(size) * sin(rot / size) * size) ** Math.floor(Math.cos(rot)) * rot//sin(rot/size*(cos(rot/size))) 
-
-
-        }[k.toLowerCase()]
-    };
-
-
-    //offset.x = formulasx[selectedX.toLowerCase()];
-    //offset.y = formulasy[selectedY.toLowerCase()];
-    offset.x = form(selectedX, 'x')
-    offset.y = form(selectedY, 'y')
+    drawRotStyle = SPIN.get(spinstyle)
+    offset.x = formula(selectedX, 'x', size, rot)
+    offset.y = formula(selectedY, 'y', size, rot)
     currentSize = size
-    ctx.save()
-    ctx.translate(x * zoom, y * zoom)
-    ctx.translate(zoom, zoom)
+    const coords = {
+        x: x * zoom,
+        y: y * zoom
+    }, angle = rotation * (drawRotStyle * spinSpeed)
+    ctx.translate(coords.x, coords.y)
     ctx.beginPath()
-    ctx.rotate(rotation * (m * spinSpeed))
+    ctx.rotate(angle)
     ctx.globalCompositeOperation = filter;
-    ctx.lineWidth = 2.5 * sizemult
+    ctx.lineWidth = 2.5
     if (glow) {
         ctx.shadowBlur = 15
     }
@@ -362,19 +356,21 @@ function Draw(x, y, size, inverse) {
         ctx.shadowBlur = 0
     }
     if (rainbowType === 'Cycle') {
-        
+
         ctx.shadowColor = ctx.strokeStyle = `rgb(${rgb.r},${rgb.g},${rgb.b})`
     }
-    else { 
-        ctx.shadowColor = ctx.strokeStyle = `hsl(${100 - size * 2},100%,50%)` 
+    else {
+        ctx.shadowColor = ctx.strokeStyle = `hsl(${100 - size * 2},100%,50%)`
     }
+    //Using map instead of switch statements
     let cases = new Map([
         ['square', () => {
-            ctx.moveTo(size * zoom, size * zoom)
+            /*ctx.moveTo(size * zoom, size * zoom)
             ctx.lineTo(size * zoom, -size * zoom)
             ctx.lineTo(-size * zoom, -size * zoom)
             ctx.lineTo(-size * zoom, size * zoom)
-            ctx.lineTo(size * zoom, size * zoom)
+            ctx.lineTo(size * zoom, size * zoom)*/
+            ctx.fillRect(size * zoom, size * zoom)
         }],
         ['circle', () => {
             ctx.arc(0, 0, size * zoom, 0, 2 * Math.PI)
@@ -406,15 +402,11 @@ function Draw(x, y, size, inverse) {
     else {
         cases.get('default')()
         //cases.forEach(o=>o())
-
     }
     ctx.stroke()
-    ctx.restore()
-
-
-
+    ctx.rotate(-angle)
+    ctx.translate(-coords.x, -coords.y)
     if (fill) {
-
         ctx.fill()
     }
     try {
@@ -427,7 +419,6 @@ function Draw(x, y, size, inverse) {
         text = 'An error has occurred:'
         ctx.fillStyle = 'red'
         text2 = e.message + '[error]'
-        //  document.getElementById('sizeMultiplier').value = '0.95'
         sizeMultiplier = 0.95
         throw e
         return;
@@ -435,41 +426,25 @@ function Draw(x, y, size, inverse) {
 
 }
 
-function componentToHex(c) {
+/*function componentToHex(c) {
     var hex = c.toString(16);
     return hex.length == 1 ? "0" + hex : hex;
 }
 
 function rgbToHex(r, g, b) {
     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-}
+}*/
 let distortion = {
     x: 1,
     y: 1
 }
 function updateSettings() {
     try {
-
-        /*  fill = document.getElementById('fill').checked
-          sizeMultiplier = +document.getElementById('sizeMultiplier').value
-          color = col.value
-          bgcolor = document.getElementById('bgcolor').value
-          shape = Math.trunc(+document.getElementById('sides').value) || document.getElementById('shape').value
-          spinstyle = document.querySelector('input[name="spin"]:checked').value
-          mirrorstyle = document.getElementById('mirror').value
-          //  reversed = document.getElementById('reversed').checked
-          rot = 0;
-          spinSpeed = +document.getElementById('spinSpeed').value
-          intensityY = +document.getElementById('intensityY').value
-          intensityX = +document.getElementById('intensityX').value
-          moving[4] = 0
-          moving[5] = 0
-          zoom = +document.getElementById('zoom').value
-          animlength = +document.getElementById('animlength').value*/
         spinSpeed = $('#spin')[0].value
         shape = $('#sel')[0].value
         fill = $('#layer')[0].checked
         glow = $('#glow')[0].checked
+        glow && console.warn('Shadow blur is enabled')
         mirrorstyle = $('#mirror')[0].value
         sizeMultiplier = $('#size')[0].value
         animlength = $('#dura')[0].value
@@ -479,15 +454,6 @@ function updateSettings() {
         animstyle = $('#loop')[0].checked
         rot = 0
         filter = $('#filter')[0].value
-        if (animlength <= 0) {
-            animlength = Infinity
-        }
-        //  animspeed = +document.getElementById('animspeed').value
-        //animstyle = document.getElementById('animstyle').value
-
-        if (animstyle = 'inverse') {
-            animspeed = Math.abs(animspeed)
-        }
         text = text2 = ''
     } catch (e) {
         text = 'An error has occurred:';
@@ -500,16 +466,9 @@ let frame = 0
 function Update() {
     frame = requestAnimationFrame(Update)
     cycleColour()
-
     canvas.height = window.innerHeight
     canvas.width = window.innerWidth
-    if (reversed) {
-        rot -= animspeed
-    } else {
-        rot += animspeed
-    }
-
-
+    rot += animspeed
     if (Math.abs(rot) > Math.PI * animlength) {
         /*switch (animstyle) {
             default:
@@ -522,9 +481,10 @@ function Update() {
                 rot *= -1;
                 break;
         }*/
-        animstyle ? rot = 0.000001 : animspeed *= -1
+        animstyle ? rot = 0.000001 : rot *= -1
     }
     ctx.clearRect(0, 0, canvas.width, canvas.height)
+    //Use arrow keys
     if (moving[0]) {
         moving[4] -= 3 / zoom
     }
@@ -549,6 +509,7 @@ function Update() {
                 Draw((canvas.width / 2 / zoom) + moving[5], (canvas.height / 2 / zoom) + moving[4], 100, 3)
                 break;
         }
+        //Recursive Draw
         Draw((canvas.width / 2 / zoom) + moving[5], (canvas.height / 2 / zoom) + moving[4], 100, 0)
 
 
@@ -556,21 +517,17 @@ function Update() {
         text = 'An error has occurred:'
         ctx.fillStyle = 'red'
         text2 = e.message + '[error]'
-        //  document.getElementById('sizeMultiplier').value = '0.95'
         sizeMultiplier = 0.95
         throw e
     }
     ctx.fillStyle = '#FFFFFF'
-    ctx.textAlign = 'left'
-    ctx.font = "50px lexend";
-
     ctx.textAlign = 'center'
     ctx.font = "30px lexend";
-    ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+    ctx.fillText(text, 762.5 , 324);
     if (text2.includes('[error]')) {
         ctx.fillStyle = '#FF3333'
     }
-    ctx.fillText(text2.replace('[error]', ''), canvas.width / 2, (canvas.height / 2) + 40);
+    ctx.fillText(text2.replace('[error]', ''), 762.5, 324 + 40);
 
 
 }
@@ -612,10 +569,10 @@ window.addEventListener('keyup', (e) => {
 
 requestAnimationFrame(Update)
 
-canvas.addEventListener('mousemove', (e) => {
+/*canvas.addEventListener('mousemove', (e) => {
     mousepos.x = e.x
     mousepos.y = e.y
-})
+})*/
 $('canvas').on({
     mousedown: updateSettings
 })

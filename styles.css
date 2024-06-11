@@ -13,7 +13,7 @@ p {
 }
 
 label {
-    margin: -55px;
+    margin-left: -55px;
 }
 
 body {
@@ -145,7 +145,7 @@ p {
     height: 30px;
     width: 30px;
     top: 60px;
-    border-radius: 100%;
+    
 
 }
 .zoomOut {
@@ -154,7 +154,7 @@ p {
     height: 30px;
     width: 30px;
     bottom: 60px;
-    border-radius: 100%;
+    
 
 }
 
