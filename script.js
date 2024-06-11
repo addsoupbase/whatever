@@ -555,7 +555,7 @@ function Update() {
     ctx.fillStyle = '#FFFFFF'
     ctx.textAlign = 'center'
     ctx.font = "30px lexend";
-    ctx.fillText(text, 762.5, 324);
+    ctx.fillText(text, window.innerWidth/2, window.innerHeight/2);
     if (text2.includes('[error]')) {
         ctx.fillStyle = '#FF3333'
     }
