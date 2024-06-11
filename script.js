@@ -559,7 +559,7 @@ function Update() {
     if (text2.includes('[error]')) {
         ctx.fillStyle = '#FF3333'
     }
-    ctx.fillText(text2.replace('[error]', ''), 762.5, 324 + 40);
+    ctx.fillText(text2.replace('[error]', ''), window.innerWidth/2, (window.innerHeight/2)+40);
 
 
 }
