@@ -396,6 +396,9 @@ function Draw(x, y, size, inverse) {
             ctx.textRendering = 'geometricPrecision'
             ctx.font = `${size*zoom*2}px lexend`
             ctx.textAlign='center'
+            if (fill) {
+                ctx.fillText(selectedText,0,10)
+            }
             ctx.strokeText(selectedText,0,10)
         }],
         ['circle', () => {
