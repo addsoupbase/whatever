@@ -1,15 +1,16 @@
 'use strict';
-let indicators = ['Axis', 'Cosine', 'Swirl', 'Static', 'Reach', 'Twist', 'Flip', 'Disperse', 'Whip', 'Bounce', 'Chaos', 'Vacuum', 'Magnet', 'Unwind', 'Orbit', 'Wiggle', 'Swing', 'Zigzag', 'Flicker', 'Wave', 'Cubic', 'Stretch', 'Glitch', 'Clover']
+let indicators = ['Axis', 'Cosine', 'Swirl', 'Static', 'Reach', 'Twist', 'Flip', 'Disperse', 'Whip', 'Bounce', 'Chaos', 'Vacuum', 'Magnet', 'Unwind', 'Orbit', 'Wiggle', 'Swing', 'Zigzag', 'Flicker', 'Wave', 'Cubic', 'Stretch', 'Glitch', 'Clover', 'Star']
 for (let i = 0; i < indicators.length; i++) {
     $('#modif').append(`<button name='x'class='tile${i ? ' deselected' : ' selected'}'>${indicators[i]}</button>`)
-
-}
-for (let i = 0; i < indicators.length; i++) {
     $('#modif2').append(`<button name='y'class='tile${i ? ' deselected' : ' selected'}'>${indicators[i] === 'Cosine' ? 'Sine' : indicators[i]}</button>`)
 
 }
 
+$('.container2').append(`<div class='grid3'>
+&nbsp;<button class='grid3' onclick='Import()'>Import 📥</button><button class='grid3' onclick='Export()'>Export 📤</button><button onclick='Copy()'>Copy</button>
 
+<input type='text' id='saveField'>
+</div>`)
 $('.container2').append(`<div class='grid2'>
 <div class='grid2'><span>X Intensity</span><input id='intensitX' type='text' value='1' class='grid2'><button>×2</button><button>÷2</button><br>
  <span>Y Intensity</span><input type='text' id='intensitY' value='1'class='grid2'><button>×2</button><button>÷2</button><br>
@@ -24,6 +25,9 @@ $('.container2').append(`<div class='grid2'>
  
  <option value='quarter'>Quarter Circle</option>
  <option value='circle'>Circle ⚠️</option>
+ <option value='rectangle'>Rectangle</option>           
+ <option value='special'>Petal</option>           
+ <option value='text'>Text</option>           
 
  <option value='half'>Half Circle</option>           
  <option value='ellipse'>Ellipse</option>           
@@ -128,6 +132,7 @@ function Show(w) {
     let temp = {
         menu1: function () {
             $('#tweak')[0].className = 'bottom deselected'
+            $('#save')[0].className = 'bottom deselected'
             $('#formula')[0].className = 'bottom'
 
             $('.container2').children().each(function () {
@@ -139,10 +144,22 @@ function Show(w) {
         },
         menu2: function () {
             $('#tweak')[0].className = 'bottom'
+            $('#save')[0].className = 'bottom deselected'
             $('#formula')[0].className = 'bottom deselected'
             $('.container2').children().each(function () {
                 let me = $(this)[0]
                 if (me.className === 'grid2') {
+                    $(this).show()
+                }
+            })
+        },
+        menu3: function () {
+            $('#tweak')[0].className = 'bottom deselected'
+            $('#save')[0].className = 'bottom'
+            $('#formula')[0].className = 'bottom deselected'
+            $('.container2').children().each(function () {
+                let me = $(this)[0]
+                if (me.className === 'grid3') {
                     $(this).show()
                 }
             })
@@ -228,7 +245,6 @@ let zoom = 0.5,
     intensityY = 1,
     animstyle = false,
     glow = false,
-    mini = false,
     offset = {
         x: rot,
         y: rot
@@ -236,6 +252,7 @@ let zoom = 0.5,
     fill = false,
     shape = 'quarter',
     spinstyle = 'size',
+    selectedText = null,
     filter = 'source-over',
     sizeMultiplier = 0.95,
     spinSpeed = 0.05,
@@ -256,29 +273,30 @@ let zoom = 0.5,
 
         const container = {
             axis: rot,
-            cosine: cos(rot)*3,
+            cosine: cos(rot) * 3,
             swirl: sin(rot / size) * 5,
             wiggle: (sin(rot * (rot / size)) + rot / size) * 5,
             unwind: sin(size / (rot + 0.0001)) * 4,
-            static: sin(size),
-            flip: sin(size + rot),
+            static: sin(size) * 30,
+            flip: sin(size + rot) * 20,
             twist: sin(size) * cos(rot) * 50,
             disperse: Math.atan2(cos(size), sin(size)) * rot,
             whip: ((rot / size) * sin(rot)) - cos(rot),
-            bounce: Math.abs(sin(rot)),
+            bounce: Math.abs(sin(rot)) * 5,
             chaos: Math.random() * 10,
-            vacuum: Math.sinh(rot / size),
+            vacuum: ((Math.pow(size, 2) - Math.pow(rot, 2)) / (size + 0.0001) * sin(rot / size) / 5) / size * rot,
             magnet: (size / rot),
-            orbit: ((cos(rot / size) * rot) / (size * 10)) * 50,
-            reach: size/4,
+            orbit: ((cos(rot / size) * rot) / (size * 10)) * 60,
+            reach: size / 4,
             swing: sin(rot / size) * cos(rot / size) * rot,
-            zigzag: cos(rot / size) * sin(rot / size) * cos(rot / size) * Math.tan(rot / size),
+            zigzag: (cos(rot / size) * sin(rot / size) * cos(rot / size) * Math.tan(rot / size)) * 20,
             flicker: frame % 2 ? sin(rot / size) * 5 : ((cos(rot / size) * rot) / (size * 10)) * 50,
             wave: cos(frame / size / rot) * (rot),
             cubic: cos(frame / size / rot) * (rot) * sin(rot / size) * sin(rot / size),
             stretch: cos(frame / size / rot) * (rot) * sin(rot / size) * sin(rot / size) * cos(rot / size),
             glitch: (cos(frame / size) * cos(size) * sin(rot / size) * size) ** Math.floor(Math.cos(rot)) * rot,
-            clover: sin(rot / size * (cos(rot / size))) * (rot / size)*10
+            clover: sin(rot / size * (cos(rot / size))) * (rot / size) * 10,
+            star:  ((cos(frame / size / rot) * (rot)) * ((cos(rot / size) * rot) / (size * 10)) * 60 * sin(rot / size)) / 10,
 
         }
 
@@ -327,7 +345,7 @@ function cycleColour() {
 const increase = 1;
 let rainbowType = 'Cycle'
 function Draw(x, y, size, inverse) {
-    if (size <= 2 || size >= 10000) {
+    if (size <= 2 || size >= 10500) {
         return
     }
 
@@ -364,13 +382,21 @@ function Draw(x, y, size, inverse) {
     }
     //Using map instead of switch statements
     let cases = new Map([
-        ['square', () => {
-            /*ctx.moveTo(size * zoom, size * zoom)
-            ctx.lineTo(size * zoom, -size * zoom)
-            ctx.lineTo(-size * zoom, -size * zoom)
-            ctx.lineTo(-size * zoom, size * zoom)
-            ctx.lineTo(size * zoom, size * zoom)*/
-            ctx.fillRect(size * zoom, size * zoom)
+        ['rectangle', () => {
+            ctx.moveTo(size*0.5 * zoom, size*1.5 * zoom)
+            ctx.lineTo(size *0.5* zoom, -size*1.5 * zoom)
+            ctx.lineTo(-size *0.5* zoom, -size*1.5 * zoom)
+            ctx.lineTo(-size*0.5 * zoom, size*1.5 * zoom)
+            ctx.lineTo(size*0.5 * zoom, size*1.5 * zoom)
+        }],
+        ['petal', () => {
+            ctx.roundRect(-size/2,-size/2, size, size, [40*zoom, 10*zoom])
+        }],
+        ['text', () => {
+            ctx.textRendering = 'geometricPrecision'
+            ctx.font = `${size*zoom*2}px lexend`
+            ctx.textAlign='center'
+            ctx.strokeText(selectedText,0,10)
         }],
         ['circle', () => {
             ctx.arc(0, 0, size * zoom, 0, 2 * Math.PI)
@@ -442,6 +468,9 @@ function updateSettings() {
     try {
         spinSpeed = $('#spin')[0].value
         shape = $('#sel')[0].value
+        if (shape !== 'text') {
+            selectedText = null
+        }
         fill = $('#layer')[0].checked
         glow = $('#glow')[0].checked
         glow && console.warn('Shadow blur is enabled')
@@ -455,6 +484,9 @@ function updateSettings() {
         rot = 0
         filter = $('#filter')[0].value
         text = text2 = ''
+        if (shape === 'text' && selectedText == null) {
+            selectedText = prompt('Enter text') ?? null;
+        }
     } catch (e) {
         text = 'An error has occurred:';
         text2 = e.message + '[error]'
@@ -523,7 +555,7 @@ function Update() {
     ctx.fillStyle = '#FFFFFF'
     ctx.textAlign = 'center'
     ctx.font = "30px lexend";
-    ctx.fillText(text, 762.5 , 324);
+    ctx.fillText(text, 762.5, 324);
     if (text2.includes('[error]')) {
         ctx.fillStyle = '#FF3333'
     }
@@ -548,9 +580,7 @@ document.addEventListener('keydown', (e) => {
         moving[2] = false;
         moving[3] = true;
     }
-    if (e.key.toLowerCase() === 'r') {
-        random()
-    }
+
 })
 window.addEventListener('keyup', (e) => {
     if (e.key === 'ArrowUp') {
@@ -582,3 +612,58 @@ $(document).on({
         zoom = Math.max(0.004, zoom)
     }
 })
+function Export(){
+    let settings = {
+        x: selectedX,
+        y: selectedY,
+        ix: intensityX,
+        iy: intensityY,
+        rotSpeed: spinSpeed,
+        dura: animlength,
+        mult: sizeMultiplier,
+        layered: fill,
+        glow: glow,
+        loop: animstyle,
+        shape: shape,
+        filter: filter,
+        mirror: mirrorstyle,
+        rainbow: rainbowType,
+        text: selectedText,
+
+    }
+    let txt = JSON.stringify(settings)
+$('#saveField')[0].value = txt
+}
+async function Copy() {
+   await navigator.clipboard.writeText($('#saveField')[0].value)
+   text='Copied ✅'
+}
+function Import() {
+   try{ let data = JSON.parse($('#saveField')[0].value);
+
+    $('#spin')[0].value = data.rotSpeed
+    $('#sel')[0].value = data.shape
+    $('#layer')[0].checked = data.fill
+    $('#glow')[0].checked = data.glow
+    $('#mirror')[0].value = data.mirror
+    $('#size')[0].value = data.mult
+    $('#dura')[0].value = data.animlength
+    selectedText = data.text
+    $('input:radio').each(function(){
+        this.checked = false
+    }).each(function(){
+        if ($(this).val() === data.rainbow) {
+            this.checked = true
+        }
+    })
+    $('#intensitY')[0].value = data.iy
+    $('#intensitX')[0].value = data.ix
+    $('#loop')[0].checked = data.loop
+    $('#filter')[0].value = data.filter
+    updateSettings()}
+    catch(e) {
+        text = 'An error has occured:'
+        text2 = e.message + '[error]'
+        throw e
+    }
+}
