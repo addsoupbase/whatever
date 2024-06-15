@@ -506,7 +506,7 @@ function Update() {
     canvas.height = window.innerHeight
     canvas.width = window.innerWidth
     rot += animspeed
-    ctx.save()
+    //ctx.save()
     ctx.scale(Zoom,Zoom)
     if (Math.abs(rot) > Math.PI * animlength) {
         /*switch (animstyle) {
@@ -551,7 +551,7 @@ function Update() {
         }
         //Recursive Draw
         Draw((canvas.width / 2 / zoom)/Zoom + moving[5], (canvas.height / 2 / zoom)/Zoom + moving[4], 100, 0)
-        ctx.restore()
+        //ctx.restore()
 
 
     } catch (e) {
@@ -617,11 +617,11 @@ $('canvas').on({
 })
 $(document).on({
     wheel: function (event) {
-        //zoom += Math.sign(event.originalEvent.wheelDeltaY) * 0.01
-       // zoom = Math.max(0.004, zoom)
+        zoom += Math.sign(event.originalEvent.wheelDeltaY) * 0.01
+       zoom = Math.max(0.004, zoom)
     
-       Zoom += Math.sign(event.originalEvent.wheelDeltaY) * 0.05
-       ctx.scale(Zoom,Zoom)
+      // Zoom += Math.sign(event.originalEvent.wheelDeltaY) * 0.05
+      // ctx.scale(Zoom,Zoom)
     }
 })
 function zOOm() {
