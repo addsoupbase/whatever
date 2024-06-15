@@ -620,7 +620,7 @@ $(document).on({
         //zoom += Math.sign(event.originalEvent.wheelDeltaY) * 0.01
        // zoom = Math.max(0.004, zoom)
     
-       Zoom += Math.sign(event.originalEvent.wheelDeltaY) * 0.01
+       Zoom += Math.sign(event.originalEvent.wheelDeltaY) * 0.05
        ctx.scale(Zoom,Zoom)
     }
 })
