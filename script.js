@@ -540,17 +540,17 @@ function Update() {
     try {
         switch (mirrorstyle) {
             case 'both':
-                Draw((canvas.width / 2 / zoom) + moving[5], (canvas.height / 2 / zoom) + moving[4], 100, 3)
-                Draw((canvas.width / 2 / zoom) + moving[5], (canvas.height / 2 / zoom) + moving[4], 100, 1)
+                Draw((canvas.width / 2 / zoom)/zoom + moving[5], (canvas.height / 2 / zoom)/zoom + moving[4], 100, 3)
+                Draw((canvas.width / 2 / zoom)/zoom + moving[5], (canvas.height / 2 / zoom)/zoom + moving[4], 100, 1)
             case 'top':
-                Draw((canvas.width / 2 / zoom) + moving[5], (canvas.height / 2 / zoom) + moving[4], 100, 2)
+                Draw((canvas.width / 2 / zoom)/zoom + moving[5], (canvas.height / 2 / zoom)/zoom + moving[4], 100, 2)
                 break;
             case 'left':
-                Draw((canvas.width / 2 / zoom) + moving[5], (canvas.height / 2 / zoom) + moving[4], 100, 3)
+                Draw((canvas.width / 2 / zoom)/zoom + moving[5], (canvas.height / 2 / zoom)/zoom + moving[4], 100, 3)
                 break;
         }
         //Recursive Draw
-        Draw((canvas.width / 2 / zoom) + moving[5], (canvas.height / 2 / zoom) + moving[4], 100, 0)
+        Draw((canvas.width / 2 / zoom)/Zoom + moving[5], (canvas.height / 2 / zoom)/Zoom + moving[4], 100, 0)
         ctx.restore()
 
 
@@ -624,6 +624,9 @@ $(document).on({
        ctx.scale(Zoom,Zoom)
     }
 })
+function zOOm() {
+    
+}
 function Export(){
     let settings = {
         x: selectedX,
