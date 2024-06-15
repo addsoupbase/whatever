@@ -236,7 +236,8 @@ let currentSize;
 canvas.width = 2000;
 canvas.height = 1200
 //Defs
-let zoom = 0.5,
+let zoom = 1,
+Zoom = 1,
     text = "⚠️ = may cause lag",
     text2 = '',
     animlength = 100,
@@ -344,6 +345,7 @@ function cycleColour() {
 }
 const increase = 1;
 let rainbowType = 'Cycle'
+ctx.lineJoin = "bevel";
 function Draw(x, y, size, inverse) {
     if (size <= 2 || size >= 10500) {
         return
@@ -504,6 +506,8 @@ function Update() {
     canvas.height = window.innerHeight
     canvas.width = window.innerWidth
     rot += animspeed
+    ctx.save()
+    ctx.scale(Zoom,Zoom)
     if (Math.abs(rot) > Math.PI * animlength) {
         /*switch (animstyle) {
             default:
@@ -521,17 +525,18 @@ function Update() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     //Use arrow keys
     if (moving[0]) {
-        moving[4] -= 3 / zoom
+        moving[4] -= 3 / Zoom
     }
     if (moving[1]) {
-        moving[4] += 3 / zoom
+        moving[4] += 3 / Zoom
     }
     if (moving[2]) {
-        moving[5] -= 3 / zoom
+        moving[5] -= 3 / Zoom
     }
     if (moving[3]) {
-        moving[5] += 3 / zoom
+        moving[5] += 3 / Zoom
     }
+    
     try {
         switch (mirrorstyle) {
             case 'both':
@@ -546,6 +551,7 @@ function Update() {
         }
         //Recursive Draw
         Draw((canvas.width / 2 / zoom) + moving[5], (canvas.height / 2 / zoom) + moving[4], 100, 0)
+        ctx.restore()
 
 
     } catch (e) {
@@ -611,8 +617,11 @@ $('canvas').on({
 })
 $(document).on({
     wheel: function (event) {
-        zoom += Math.sign(event.originalEvent.wheelDeltaY) * 0.01
-        zoom = Math.max(0.004, zoom)
+        //zoom += Math.sign(event.originalEvent.wheelDeltaY) * 0.01
+       // zoom = Math.max(0.004, zoom)
+    
+       Zoom += Math.sign(event.originalEvent.wheelDeltaY) * 0.01
+       ctx.scale(Zoom,Zoom)
     }
 })
 function Export(){
