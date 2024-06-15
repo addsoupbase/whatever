@@ -391,7 +391,7 @@ function Draw(x, y, size, inverse) {
             ctx.lineTo(-size*0.5 * zoom, size*1.5 * zoom)
             ctx.lineTo(size*0.5 * zoom, size*1.5 * zoom)
         }],
-        ['petal', () => {
+        ['special', () => {
             ctx.roundRect(-size/2,-size/2, size, size, [40*zoom, 10*zoom])
         }],
         ['text', () => {
