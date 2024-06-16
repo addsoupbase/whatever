@@ -398,7 +398,7 @@ function Draw(x, y, size, inverse) {
             ctx.lineTo(size*0.5 * zoom, size*1.5 * zoom)
         }],
         ['special', () => {
-            ctx.roundRect(-size/2,-size/2, size, size, [40*zoom, 10*zoom])
+            ctx.roundRect(-size/2,-size/2, size, size, [40, 10])
         }],
         ['text', () => {
             ctx.textRendering = 'geometricPrecision'
