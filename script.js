@@ -62,6 +62,8 @@ $('.container2').append(`<div class='grid2'>
  <span>Rainbow Style
  <br><input type='radio' value='Cycle' name='color1' checked><label>Cycle</label>
  <br><input type='radio' value='Gradual' name='color1'><label>Gradual</label></span>
+  <br><input type='radio' value='CycleGradual' name='color1'><label>Spectrum</label></span>
+
  
  </div>
 </div>`)
@@ -379,8 +381,12 @@ function Draw(x, y, size, inverse) {
 
         ctx.shadowColor = ctx.strokeStyle = `rgb(${rgb.r},${rgb.g},${rgb.b})`
     }
+    else if (rainbowType === 'CycleGradual'){
+        ctx.shadowColor = ctx.strokeStyle = `hsl(${(100 - size * 2)-(frame%360)},100%,50%)`
+    }
     else {
-        ctx.shadowColor = ctx.strokeStyle = `hsl(${100 - size * 2},100%,50%)`
+        ctx.shadowColor = ctx.strokeStyle = `hsl(${(100 - size * 2)},100%,50%)`
+
     }
     //Using map instead of switch statements
     let cases = new Map([
