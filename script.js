@@ -9,7 +9,7 @@ for (let i = 0; i < indicators.length; i++) {
 $('.container2').append(`<div class='grid3'>
 &nbsp;<button class='grid3' onclick='Import()'>Import 📥</button><button class='grid3' onclick='Export()'>Export 📤</button><button onclick='Copy()'>Copy</button>
 
-<input type='text' id='saveField'>
+<input type='text' placeholder='This is broken rn :(' id='saveField'>
 </div>`)
 $('.container2').append(`<div class='grid2'>
 <div class='grid2'><span>X Intensity</span><input id='intensitX' type='text' value='1' class='grid2'><button>×2</button><button>÷2</button><br>
