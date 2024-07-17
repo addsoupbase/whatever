@@ -1,5 +1,5 @@
 'use strict';
-let indicators = ['Axis', 'Cosine', 'Swirl', 'Static', 'Reach', 'Twist', 'Flip', 'Disperse', 'Whip', 'Bounce', 'Chaos', 'Vacuum', 'Magnet', 'Unwind', 'Orbit', 'Wiggle', 'Swing', 'Zigzag', 'Flicker', 'Wave', 'Cubic', 'Stretch', 'Glitch', 'Clover', 'Star']
+let indicators = ['Axis', 'Cosine', 'Swirl', 'Static', 'Reach', 'Twist', 'Flip', 'Disperse', 'Whip', 'Bounce', 'Chaos', 'Vacuum', 'Magnet', 'Unwind', 'Orbit', 'Wiggle', 'Swing', 'Zigzag', 'Flicker', 'Wave', 'Cubic', 'Stretch', 'Glitch', 'Clover', 'Star', 'test']
 for (let i = 0; i < indicators.length; i++) {
     $('#modif').append(`<button name='x'class='tile${i ? ' deselected' : ' selected'}'>${indicators[i]}</button>`)
     $('#modif2').append(`<button name='y'class='tile${i ? ' deselected' : ' selected'}'>${indicators[i] === 'Cosine' ? 'Sine' : indicators[i]}</button>`)
@@ -239,7 +239,7 @@ canvas.width = 2000;
 canvas.height = 1200
 //Defs
 let zoom = 1,
-Zoom = 1,
+    Zoom = 1,
     text = "⚠️ = may cause lag",
     text2 = '',
     animlength = 100,
@@ -262,6 +262,10 @@ Zoom = 1,
     formula = (key, axis, size, rot) => {
         let sin = Math.sin,
             cos = Math.cos,
+            asin = Math.asin,
+            acos = Math.acos,
+            cosh = Math.cosh,
+            sinh = Math.sinh,
             k = key;
         if (key == null) {
             throw Error('Key is broken.')
@@ -269,11 +273,16 @@ Zoom = 1,
         if (axis === 'y') {
             sin = Math.cos
             cos = Math.sin
+            acos = Math.asin
+            asin = Math.acos
+            sinh = Math.cosh
+            cosh = Math.sinh
         }
         if (k === 'Sine') {
             k = 'Cosine'
         }
-
+let l = rot/size,
+ll = size/rot
         const container = {
             axis: rot,
             cosine: cos(rot) * 3,
@@ -299,8 +308,10 @@ Zoom = 1,
             stretch: cos(frame / size / rot) * (rot) * sin(rot / size) * sin(rot / size) * cos(rot / size),
             glitch: (cos(frame / size) * cos(size) * sin(rot / size) * size) ** Math.floor(Math.cos(rot)) * rot,
             clover: sin(rot / size * (cos(rot / size))) * (rot / size) * 10,
-            star:  ((cos(frame / size / rot) * (rot)) * ((cos(rot / size) * rot) / (size * 10)) * 60 * sin(rot / size)) / 10,
-
+            star: ((cos(frame / size / rot) * (rot)) * ((cos(rot / size) * rot) / (size * 10)) * 60 * sin(rot / size)) / 10,
+             test: Math.sqrt(l*l+ll*ll)*rot,
+            //test: Math.asinh((cos(rot/size)*size))*acos(cos(rot)),
+            //test: acos(sin(rot/size))* cosh(cos(rot))
         }
 
         return container[k.toLowerCase()]
@@ -356,11 +367,12 @@ function Draw(x, y, size, inverse) {
     let rotation, drawRotStyle = 1;
     rotation = rot
     let SPIN = new Map(
-        [['size', size / 20], ['x', Math.atan2(x, y) * 6], ['cursor', Math.atan2(offset.x, offset.y)]]
+        [['size', size / 20], ['x', Math.atan2(x, y) * 6], ['cursor', Math.atan2(offset.x, offset.y)], ['curve', 4]]
     )
-    drawRotStyle = SPIN.get(spinstyle)
+    drawRotStyle = SPIN.get('curve')
     offset.x = formula(selectedX, 'x', size, rot)
     offset.y = formula(selectedY, 'y', size, rot)
+
     currentSize = size
     const coords = {
         x: x * zoom,
@@ -381,8 +393,8 @@ function Draw(x, y, size, inverse) {
 
         ctx.shadowColor = ctx.strokeStyle = `rgb(${rgb.r},${rgb.g},${rgb.b})`
     }
-    else if (rainbowType === 'CycleGradual'){
-        ctx.shadowColor = ctx.strokeStyle = `hsl(${(100 - size * 2)-(frame%360)},100%,50%)`
+    else if (rainbowType === 'CycleGradual') {
+        ctx.shadowColor = ctx.strokeStyle = `hsl(${(100 - size * 2) - (frame % 360)},100%,50%)`
     }
     else {
         ctx.shadowColor = ctx.strokeStyle = `hsl(${(100 - size * 2)},100%,50%)`
@@ -391,23 +403,23 @@ function Draw(x, y, size, inverse) {
     //Using map instead of switch statements
     let cases = new Map([
         ['rectangle', () => {
-            ctx.moveTo(size*0.5 * zoom, size*1.5 * zoom)
-            ctx.lineTo(size *0.5* zoom, -size*1.5 * zoom)
-            ctx.lineTo(-size *0.5* zoom, -size*1.5 * zoom)
-            ctx.lineTo(-size*0.5 * zoom, size*1.5 * zoom)
-            ctx.lineTo(size*0.5 * zoom, size*1.5 * zoom)
+            ctx.moveTo(size * 0.5 * zoom, size * 1.5 * zoom)
+            ctx.lineTo(size * 0.5 * zoom, -size * 1.5 * zoom)
+            ctx.lineTo(-size * 0.5 * zoom, -size * 1.5 * zoom)
+            ctx.lineTo(-size * 0.5 * zoom, size * 1.5 * zoom)
+            ctx.lineTo(size * 0.5 * zoom, size * 1.5 * zoom)
         }],
         ['special', () => {
-            ctx.roundRect(-size/2,-size/2, size, size, [40, 10])
+            ctx.roundRect(-size / 2, -size / 2, size, size, [40, 10])
         }],
         ['text', () => {
             ctx.textRendering = 'geometricPrecision'
-            ctx.font = `${size*zoom*2}px lexend`
-            ctx.textAlign='center'
+            ctx.font = `${size * zoom * 2}px lexend`
+            ctx.textAlign = 'center'
             if (fill) {
-                ctx.fillText(selectedText,0,10)
+                ctx.fillText(selectedText, 0, 10)
             }
-            ctx.strokeText(selectedText,0,10)
+            ctx.strokeText(selectedText, 0, 10)
         }],
         ['circle', () => {
             ctx.arc(0, 0, size * zoom, 0, 2 * Math.PI)
@@ -513,7 +525,7 @@ function Update() {
     canvas.width = window.innerWidth
     rot += animspeed
     //ctx.save()
-    ctx.scale(Zoom,Zoom)
+    ctx.scale(Zoom, Zoom)
     if (Math.abs(rot) > Math.PI * animlength) {
         /*switch (animstyle) {
             default:
@@ -542,21 +554,21 @@ function Update() {
     if (moving[3]) {
         moving[5] += 3 / Zoom
     }
-    
+
     try {
         switch (mirrorstyle) {
             case 'both':
-                Draw((canvas.width / 2 / zoom)/Zoom + moving[5], (canvas.height / 2 / zoom)/Zoom + moving[4], 100, 3)
-                Draw((canvas.width / 2 / zoom)/Zoom + moving[5], (canvas.height / 2 / zoom)/Zoom + moving[4], 100, 1)
+                Draw((canvas.width / 2 / zoom) / Zoom + moving[5], (canvas.height / 2 / zoom) / Zoom + moving[4], 100, 3)
+                Draw((canvas.width / 2 / zoom) / Zoom + moving[5], (canvas.height / 2 / zoom) / Zoom + moving[4], 100, 1)
             case 'top':
-                Draw((canvas.width / 2 / zoom)/Zoom + moving[5], (canvas.height / 2 / zoom)/Zoom + moving[4], 100, 2)
+                Draw((canvas.width / 2 / zoom) / Zoom + moving[5], (canvas.height / 2 / zoom) / Zoom + moving[4], 100, 2)
                 break;
             case 'left':
-                Draw((canvas.width / 2 / zoom)/Zoom + moving[5], (canvas.height / 2 / zoom)/Zoom + moving[4], 100, 3)
+                Draw((canvas.width / 2 / zoom) / Zoom + moving[5], (canvas.height / 2 / zoom) / Zoom + moving[4], 100, 3)
                 break;
         }
         //Recursive Draw
-        Draw((canvas.width / 2 / zoom)/Zoom + moving[5], (canvas.height / 2 / zoom)/Zoom + moving[4], 100, 0)
+        Draw((canvas.width / 2 / zoom) / Zoom + moving[5], (canvas.height / 2 / zoom) / Zoom + moving[4], 100, 0)
         //ctx.restore()
 
 
@@ -570,11 +582,11 @@ function Update() {
     ctx.fillStyle = '#FFFFFF'
     ctx.textAlign = 'center'
     ctx.font = "30px lexend";
-    ctx.fillText(text, window.innerWidth/2, window.innerHeight/2);
+    ctx.fillText(text, window.innerWidth / 2, window.innerHeight / 2);
     if (text2.includes('[error]')) {
         ctx.fillStyle = '#FF3333'
     }
-    ctx.fillText(text2.replace('[error]', ''), window.innerWidth/2, (window.innerHeight/2)+40);
+    ctx.fillText(text2.replace('[error]', ''), window.innerWidth / 2, (window.innerHeight / 2) + 40);
 
 
 }
@@ -624,16 +636,16 @@ $('canvas').on({
 $(document).on({
     wheel: function (event) {
         zoom += Math.sign(event.originalEvent.wheelDeltaY) * 0.01
-       zoom = Math.max(0.004, zoom)
-    
-      // Zoom += Math.sign(event.originalEvent.wheelDeltaY) * 0.05
-      // ctx.scale(Zoom,Zoom)
+        zoom = Math.max(0.004, zoom)
+
+        // Zoom += Math.sign(event.originalEvent.wheelDeltaY) * 0.05
+        // ctx.scale(Zoom,Zoom)
     }
 })
 function zOOm() {
-    
+
 }
-function Export(){
+function Export() {
     let settings = {
         x: selectedX,
         y: selectedY,
@@ -653,36 +665,38 @@ function Export(){
 
     }
     let txt = JSON.stringify(settings)
-$('#saveField')[0].value = txt
+    $('#saveField')[0].value = txt
 }
 async function Copy() {
-   await navigator.clipboard.writeText($('#saveField')[0].value)
-   text='Copied ✅'
+    await navigator.clipboard.writeText($('#saveField')[0].value)
+    text = 'Copied ✅'
 }
 function Import() {
-   try{ let data = JSON.parse($('#saveField')[0].value);
+    try {
+        let data = JSON.parse($('#saveField')[0].value);
 
-    $('#spin')[0].value = data.rotSpeed
-    $('#sel')[0].value = data.shape
-    $('#layer')[0].checked = data.fill
-    $('#glow')[0].checked = data.glow
-    $('#mirror')[0].value = data.mirror
-    $('#size')[0].value = data.mult
-    $('#dura')[0].value = data.animlength
-    selectedText = data.text
-    $('input:radio').each(function(){
-        this.checked = false
-    }).each(function(){
-        if ($(this).val() === data.rainbow) {
-            this.checked = true
-        }
-    })
-    $('#intensitY')[0].value = data.iy
-    $('#intensitX')[0].value = data.ix
-    $('#loop')[0].checked = data.loop
-    $('#filter')[0].value = data.filter
-    updateSettings()}
-    catch(e) {
+        $('#spin')[0].value = data.rotSpeed
+        $('#sel')[0].value = data.shape
+        $('#layer')[0].checked = data.fill
+        $('#glow')[0].checked = data.glow
+        $('#mirror')[0].value = data.mirror
+        $('#size')[0].value = data.mult
+        $('#dura')[0].value = data.animlength
+        selectedText = data.text
+        $('input:radio').each(function () {
+            this.checked = false
+        }).each(function () {
+            if ($(this).val() === data.rainbow) {
+                this.checked = true
+            }
+        })
+        $('#intensitY')[0].value = data.iy
+        $('#intensitX')[0].value = data.ix
+        $('#loop')[0].checked = data.loop
+        $('#filter')[0].value = data.filter
+        updateSettings()
+    }
+    catch (e) {
         text = 'An error has occured:'
         text2 = e.message + '[error]'
         throw e
