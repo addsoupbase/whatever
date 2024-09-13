@@ -16,15 +16,15 @@ $('.container2').append(`<div class='grid2'>
  <span>Y Intensity</span><input type='text' id='intensitY' value='1'class='grid2'><button>×2</button><button>÷2</button><br>
  <span>Spin Speed</span><input type='text' id='spin' value='0.05'  class='grid2'><button>×2</button><button>÷2</button><br>
  <span>Anim Dura.</span><input type='text' placeholder='Blank = Infinity' id='dura' value='100' class='grid2'><button>×2</button><button>÷2</button><br>
- <span>Size  ⚠️&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><input type='text' id='size' value='0.95' class='grid2 f'><button>+.01</button><button>-.01</button><br>
- <span>Layered ⚠️</span><input class='check' id='layer' type='checkbox'><br>
- <span>Glow ⚠️</span><input class='check' id='glow' type='checkbox'><br>
+ <span>Size  !!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><input type='text' id='size' value='0.95' class='grid2 f'><button>+.01</button><button>-.01</button><br>
+ <span>Layered !!</span><input class='check' id='layer' type='checkbox'><br>
+ <span>Glow !!</span><input class='check' id='glow' type='checkbox'><br>
 
  <span>Loop</span><input type='checkbox' id='loop' class='check'><br>
  <span>Shape <select id='sel'>  
  
  <option value='quarter'>Quarter Circle</option>
- <option value='circle'>Circle ⚠️</option>
+ <option value='circle'>Circle !!</option>
  <option value='rectangle'>Rectangle</option>           
  <option value='special'>Petal</option>           
  <option value='text'>Text</option>           
@@ -46,15 +46,15 @@ $('.container2').append(`<div class='grid2'>
  <option value='none'>None</option>
  <option value='top'>Vertical</option>           
  <option value='left'>Horizontal</option>           
- <option value='both'>Both ⚠️</option>           
+ <option value='both'>Both !!</option>           
            
  </select></span>
  </span><br>
  <span>Filter <select id='filter'>  
  <option value='source-over'>Default</option>
- <option value='destination-over'>Overlap ⚠️</option>           
- <option value='lighter'>Lighter ⚠️</option>           
- <option value='xor'>Glass ⚠️</option>           
+ <option value='destination-over'>Overlap !!</option>           
+ <option value='lighter'>Lighter !!</option>           
+ <option value='xor'>Glass !!</option>           
  <option value='luminosity'>Luminosity</option>           
 
  </select></span>
@@ -240,7 +240,7 @@ canvas.height = 1200
 //Defs
 let zoom = 1,
     Zoom = 1,
-    text = "⚠️ = may cause lag",
+    text = "!! = may cause lag",
     text2 = '',
     animlength = 100,
     animspeed = 0.3,
@@ -281,8 +281,8 @@ let zoom = 1,
         if (k === 'Sine') {
             k = 'Cosine'
         }
-let l = rot/size,
-ll = size/rot
+        let l = rot / size,
+            ll = size / rot
         const container = {
             axis: rot,
             cosine: cos(rot) * 3,
@@ -309,7 +309,7 @@ ll = size/rot
             glitch: (cos(frame / size) * cos(size) * sin(rot / size) * size) ** Math.floor(Math.cos(rot)) * rot,
             clover: sin(rot / size * (cos(rot / size))) * (rot / size) * 10,
             star: ((cos(frame / size / rot) * (rot)) * ((cos(rot / size) * rot) / (size * 10)) * 60 * sin(rot / size)) / 10,
-             test: Math.sqrt(l*l+ll*ll)*rot,
+            test: Math.sqrt(l * l + ll * ll) * rot,
             //test: Math.asinh((cos(rot/size)*size))*acos(cos(rot)),
             //test: acos(sin(rot/size))* cosh(cos(rot))
         }
@@ -674,7 +674,7 @@ async function Copy() {
 function Import() {
     try {
         let data = JSON.parse($('#saveField')[0].value);
-
+        console.log(data)
         $('#spin')[0].value = data.rotSpeed
         $('#sel')[0].value = data.shape
         $('#layer')[0].checked = data.fill
